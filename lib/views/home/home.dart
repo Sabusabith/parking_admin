@@ -1,19 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
+import '../../core/controllers/homecontroller/home_controller.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-        Size size = MediaQuery.of(context).size;
+    final HomeController controller = Get.put(HomeController());
 
-    return Scaffold(backgroundColor: kgreencolor,
-    body: SizedBox(width: size.width,height: size.height,
-    child: Column(
-      children: [
+    Size size = MediaQuery.of(context).size;
 
-      ],
-    ),),);
+    return Scaffold(
+      backgroundColor: kbgcolor,
+      body: Obx(() => SizedBox(
+            width: size.width,
+            height: size.height,
+            child: _screens[controller.selectedIndex.value],
+          )),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          backgroundColor: kprimerycolor,
+          currentIndex: controller.selectedIndex.value,
+          onTap: controller.changeIndex,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Settings'),
+          ],
+        ),
+      ),
+    );
   }
+
+  List _screens = [
+    Container(color: Colors.white),
+    Container(color: Colors.blue),
+    Container(color: Colors.green),
+    Container(color: Colors.yellow),
+  ];
 }

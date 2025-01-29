@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:parking_app_admin/views/auth/login/login.dart';
+import 'package:parking_app_admin/views/home/home.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:parking_app_admin/views/onboarding/onb1.dart';
 import 'package:parking_app_admin/views/onboarding/onb2.dart';
@@ -44,6 +46,11 @@ class OnboardingPageView extends StatelessWidget {
             controller: pageController,
             onPageChanged: (index) {
               _controller.updatePage(index);
+              if (index > 0) {
+                _controller.showback.value = true;
+              } else {
+                _controller.showback.value = false;
+              }
             },
             children: _pages,
           ),
@@ -57,7 +64,6 @@ class OnboardingPageView extends StatelessWidget {
                 controller: pageController,
                 count: _pages.length,
                 effect: ExpandingDotsEffect(
-                  
                   dotHeight: 8,
                   dotWidth: 8,
                   activeDotColor: kbluecolor,
@@ -97,16 +103,46 @@ class OnboardingPageView extends StatelessWidget {
                   )),
                 ),
               )),
+
+          //skip button
           Positioned(
               right: 50,
               bottom: 55,
-              child: Text(
-                "Skip",
-                style: GoogleFonts.publicSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey.shade800),
-              ))
+              child: GestureDetector(onTap: () {
+                Get.to(()=>Login());
+              },
+                child: Text(
+                  "Skip",
+                  style: GoogleFonts.publicSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade800),
+                ),
+              )),
+          //backbutton
+          Obx(() => _controller.showback.value
+              ? Positioned(
+                  left: 55,
+                  bottom: 55,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_controller.currentPage.value > 0) {
+              pageController.animateToPage(
+                _controller.currentPage.value - 1,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+              );
+            }
+                    },
+                    child: Text(
+                      "Back",
+                      style: GoogleFonts.publicSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade600),
+                    ),
+                  ))
+              : SizedBox()),
         ],
       ),
     );

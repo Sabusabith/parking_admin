@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
-import 'package:parking_app_admin/views/home/my_wallet/bottom_screen.dart';
+import 'package:parking_app_admin/views/home/my_wallet/bottom_screen/bottom_screen.dart';
 import 'package:parking_app_admin/views/home/my_wallet/payout_button.dart';
 import 'package:parking_app_admin/views/home/my_wallet/wallet_data_card.dart';
 

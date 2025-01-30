@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
+import 'package:parking_app_admin/views/home/my_wallet/bottom_screen/all_transaction_tab/all_transaction_tab.dart';
 
 class BottomScreen extends StatelessWidget {
   const BottomScreen({super.key});
@@ -79,7 +80,7 @@ class BottomScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
 
           // TabBar
           Expanded(
@@ -96,7 +97,8 @@ class BottomScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30)),
                     child: TabBar(
                       indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorPadding: EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 4),
+                      indicatorPadding:
+                          EdgeInsets.only(left: 4, right: 4, top: 4, bottom: 4),
                       indicator: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(25)),
@@ -114,13 +116,33 @@ class BottomScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Expanded(
-                    child: TabBarView(
+                  Expanded(
+                    child: Column(
                       children: [
-                        // Tab 1 content
-                        Center(child: Text("Completed Transactions")),
-                        // Tab 2 content
-                        Center(child: Text("Pending Transactions")),
+                        SizedBox(height: 10,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "1-Jan-2025",
+                                style: GoogleFonts.publicSans(
+                                    color: Colors.grey.shade900,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: TabBarView(
+                            children: [
+                            AllTransactionTab(),
+                              // Tab 2 content
+                              Center(child: Text("Pending Transactions")),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

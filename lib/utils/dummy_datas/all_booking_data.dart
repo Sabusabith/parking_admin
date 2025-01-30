@@ -35,6 +35,14 @@ List<AllbookingModel> bookingdatas = [
       time: "1 Day  2h 30m 30s"),
       AllbookingModel(
       charging: "yes",
+      image: "assets/images/bike.png",
+      date: "31",
+      week: "Wed",
+      vehiclename: "Classic 350",
+      slot: "P-17",
+      time: "1 Day  2h 30m 30s"),
+      AllbookingModel(
+      charging: "yes",
       image: "assets/images/car.png",
       date: "31",
       week: "Wed",

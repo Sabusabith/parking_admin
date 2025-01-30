@@ -3,7 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
+import 'package:parking_app_admin/views/home/bookings/bookings.dart';
 import 'package:parking_app_admin/views/home/dashboard/dashboard.dart';
+import 'package:parking_app_admin/views/home/myList/my_list.dart';
+import 'package:parking_app_admin/views/home/my_wallet/my_wallet.dart';
 import '../../core/controllers/homecontroller/home_controller.dart';
 import '../../utils/common/appcolors.dart';
 
@@ -17,23 +20,35 @@ class Home extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 30,surfaceTintColor: Colors.transparent,
-        backgroundColor: kbgcolor,
-        leadingWidth: 45,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: SizedBox(
-              width: 30,
-              height: 30,
-              child: SvgPicture.asset(
-                "assets/icons/menu.svg",
-                fit: BoxFit.contain,
-              )),
-        ),
-        actions: [
-          SvgPicture.asset("assets/icons/bell.svg",height: 30,),
-          SizedBox(width: 20,)
-        ],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(25), 
+        child: Obx(() {
+          return AppBar(
+            toolbarHeight: 25,
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: controller.selectedIndex.value == 3? kprimerycolor:kbgcolor,  // Reactive background color
+            leadingWidth: 45,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: SvgPicture.asset(
+                    "assets/icons/menu.svg",
+                    fit: BoxFit.contain,
+                  )),
+            ),
+            actions: [
+              SvgPicture.asset(
+                "assets/icons/bell.svg",
+                height: 30,
+              ),
+              SizedBox(
+                width: 20,
+              )
+            ],
+          );
+        }),
       ),
       backgroundColor: kbgcolor,
       body: Obx(() => SizedBox(
@@ -42,10 +57,11 @@ class Home extends StatelessWidget {
             child: _screens[controller.selectedIndex.value],
           )),
       bottomNavigationBar: Obx(() => Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
-        child: SizedBox(height: 95,width: size.width,
-          child: BottomNavigationBar(
-            
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+            child: SizedBox(
+              height: 95,
+              width: size.width,
+              child: BottomNavigationBar(
                 backgroundColor: kbgcolor,
                 elevation: 0,
                 selectedFontSize: 12,
@@ -59,8 +75,9 @@ class Home extends StatelessWidget {
                     color: Colors.grey.shade900,
                     fontWeight: FontWeight.w500,
                     fontSize: 10),
-                selectedItemColor: Colors.grey.shade900, // Set selected color
-                unselectedItemColor: Colors.grey.shade800, // Set unselected color
+                selectedItemColor: Colors.grey.shade900, 
+                unselectedItemColor:
+                    Colors.grey.shade800, 
                 currentIndex: controller.selectedIndex.value,
                 onTap: controller.changeIndex,
                 items: [
@@ -121,16 +138,16 @@ class Home extends StatelessWidget {
                       label: 'Profile'),
                 ],
               ),
-        ),
-      )),
+            ),
+          )),
     );
   }
 
   List _screens = [
     Dashboard(),
-    Container(color: Colors.blue),
-    Container(color: Colors.green),
-    Container(color: Colors.yellow),
+    MyList(),
+    Bookings(),
+    MyWallet(),
     Container(color: Colors.yellow),
   ];
 }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:parking_app_admin/core/controllers/booking_controller/booking_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/utils/dummy_datas/all_booking_data.dart';
 
 class AllBookings extends StatelessWidget {
-  const AllBookings({super.key});
-
+  AllBookings({super.key});
+  BookingController controller = Get.put(BookingController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    controller.initializeApprovalList(bookingdatas.length);
 
     return Expanded(
       child: ListView.builder(
@@ -35,66 +38,75 @@ class AllBookings extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(width: 120,
-                                                          height: 90,
-                                                          // color: Colors.green.withOpacity(.5),
-                                                          child: Padding(
-                            padding: const EdgeInsets.only(left: 18),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  bookingdatas[index].week,
-                                  style: GoogleFonts.publicSans(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: ksecndrycolor),
-                                ),
-                                Transform(
-                                  transform:
-                                      Matrix4.translationValues(-1, -4, 0),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(width: 42,
-                                        // color: Colors.green.withOpacity(.5),
-                                        child: Text(
-                                          bookingdatas[index].date,
-                                          style: GoogleFonts.publicSans(
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.w600,
-                                              color: ksecndrycolor),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      //car image
-                                      Column(
+                            Container(
+                              width: 120,
+                              height: 90,
+                              // color: Colors.green.withOpacity(.5),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 18),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      bookingdatas[index].week,
+                                      style: GoogleFonts.publicSans(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: ksecndrycolor),
+                                    ),
+                                    Transform(
+                                      transform:
+                                          Matrix4.translationValues(-1, -4, 0),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Image.asset(
-                                            bookingdatas[index].image,
-                                            height: 29,
+                                          Container(
+                                            width: 42,
+                                            // color: Colors.green.withOpacity(.5),
+                                            child: Text(
+                                              bookingdatas[index].date,
+                                              style: GoogleFonts.publicSans(
+                                                  fontSize: 32,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: ksecndrycolor),
+                                            ),
                                           ),
-                                          Text(
-                                            bookingdatas[index].vehiclename,
-                                            style: GoogleFonts.publicSans(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w500,
-                                                color:
-                                                    Colors.grey.shade900),
-                                          )
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          //car image
+                                          Column(
+                                            children: [
+                                              Image.asset(
+                                                bookingdatas[index].image,
+                                                height: 29,
+                                              ),
+                                              SizedBox(
+                                                width: 50,
+                                                child: Text(
+                                                  bookingdatas[index]
+                                                      .vehiclename,
+                                                  style: GoogleFonts.publicSans(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.grey.shade900,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                                                          ),
-                                                        ),
                             SizedBox(
                               width: 5,
                             ),
@@ -207,45 +219,88 @@ class AllBookings extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 20),
                           child: Transform(
                             transform: Matrix4.translationValues(0, -5, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: 67,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: Colors.black)),
-                                  child: Center(
-                                    child: Text(
-                                      "Cancel",
-                                      style: GoogleFonts.publicSans(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey.shade900),
-                                    ),
+                            child: Obx(
+                              () => Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  controller.isApprovedList[index]
+                                      ? SizedBox()
+                                      : Container(
+                                          width: 67,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: Colors.black)),
+                                          child: Center(
+                                            child: Text(
+                                              "Cancel",
+                                              style: GoogleFonts.publicSans(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey.shade900),
+                                            ),
+                                          ),
+                                        ),
+                                  SizedBox(
+                                    width: 10,
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 67,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: kprimerycolor),
-                                  child: Center(
-                                    child: Text(
-                                      "Approve",
-                                      style: GoogleFonts.publicSans(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey.shade900),
-                                    ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.toggleApproval(index);
+                                    },
+                                    child: controller.isApprovedList[index]
+                                        ? Container(
+                                            width: 90,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                      "assets/icons/tick.svg"),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    "Approved",
+                                                    style:
+                                                        GoogleFonts.publicSans(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Color(
+                                                                0xff01509D)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            width: 67,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: kprimerycolor),
+                                            child: Center(
+                                              child: Text(
+                                                "Approve",
+                                                style: GoogleFonts.publicSans(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        Colors.grey.shade900),
+                                              ),
+                                            ),
+                                          ),
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         )

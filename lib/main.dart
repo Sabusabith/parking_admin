@@ -4,7 +4,7 @@ import 'package:parking_app_admin/views/home/home.dart';
 import 'package:parking_app_admin/views/splash/splash.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

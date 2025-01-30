@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^2.0.17
   smooth_page_indicator: ^1.2.0+3
   flutter_otp_text_field: ^1.4.0+2
+  syncfusion_flutter_charts: ^27.2.4
 
 dev_dependencies:
   flutter_test:

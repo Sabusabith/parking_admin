@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/utils/dummy_datas/my_list_data.dart';
+import 'package:parking_app_admin/views/home/myList/add_new_area/add_new_area.dart';
 
 class MyList extends StatelessWidget {
   const MyList({super.key});
@@ -11,11 +12,10 @@ class MyList extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: Column(mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-        
-            
             mini: true,
             backgroundColor: kprimerycolor,
             shape: CircleBorder(),
@@ -24,9 +24,17 @@ class MyList extends StatelessWidget {
               Icons.add,
               color: Colors.white,
             )),
-            onPressed: () {},
+            onPressed: () {
+              _showNewAreaBottomsheet(context,);
+            },
           ),
-          Text("Add New Area",style: GoogleFonts.publicSans(fontSize: 8,fontWeight: FontWeight.w700,color: Colors.grey.shade900),)
+          Text(
+            "Add New Area",
+            style: GoogleFonts.publicSans(
+                fontSize: 8,
+                fontWeight: FontWeight.w700,
+                color: Colors.grey.shade900),
+          )
         ],
       ),
       backgroundColor: kbgcolor,
@@ -172,7 +180,7 @@ class MyList extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(14),
                                             child: Image.asset(
-                                             mylistData[index].img,
+                                              mylistData[index].img,
                                               fit: BoxFit.cover,
                                             ))),
                                     height: 130,
@@ -388,4 +396,21 @@ class MyList extends StatelessWidget {
       ),
     );
   }
+
+  _showNewAreaBottomsheet(BuildContext context) {
+  return showModalBottomSheet(
+    backgroundColor: kbgcolor,
+    context: context,
+    isScrollControlled: true,
+    
+    builder: (BuildContext context) {
+      // Use Padding and SafeArea to ensure proper boundaries
+      return Padding(
+        padding: const EdgeInsets.only(top: 50),
+        child: AddNewArea(),
+      );
+    },
+  );
+}
+
 }

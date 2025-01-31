@@ -19,6 +19,7 @@ class AllBookings extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         itemCount: bookingdatas.length,
         itemBuilder: (context, index) {
+            String parkingSlot = "P-${index + 1}";
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -248,7 +249,7 @@ class AllBookings extends StatelessWidget {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      controller.toggleApproval(index);
+                                   controller.toggleApproval(index,  bookingdatas[index].slot);
                                     },
                                     child: controller.isApprovedList[index]
                                         ? Container(

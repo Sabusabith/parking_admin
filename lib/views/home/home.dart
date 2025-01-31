@@ -7,6 +7,7 @@ import 'package:parking_app_admin/views/home/bookings/bookings.dart';
 import 'package:parking_app_admin/views/home/dashboard/dashboard.dart';
 import 'package:parking_app_admin/views/home/myList/my_list.dart';
 import 'package:parking_app_admin/views/home/my_wallet/my_wallet.dart';
+import 'package:parking_app_admin/views/home/profile/profile.dart';
 import '../../core/controllers/homecontroller/home_controller.dart';
 import '../../utils/common/appcolors.dart';
 
@@ -26,7 +27,7 @@ class Home extends StatelessWidget {
           return AppBar(
             toolbarHeight: 25,
             surfaceTintColor: Colors.transparent,
-            backgroundColor: controller.selectedIndex.value == 3? kprimerycolor:kbgcolor,  // Reactive background color
+            backgroundColor: controller.selectedIndex.value == 3? kprimerycolor: controller.selectedIndex.value == 4?kprimerycolor:kbgcolor,  // Reactive background color
             leadingWidth: 45,
             leading: Padding(
               padding: const EdgeInsets.only(left: 20),
@@ -148,6 +149,5 @@ class Home extends StatelessWidget {
     MyList(),
     Bookings(),
     MyWallet(),
-    Container(color: Colors.yellow),
-  ];
+Profile()  ];
 }

@@ -8,5 +8,6 @@ const Color kredtilecolor = Color(0xffFFE7E7);
 const Color kgrey1color = Color(0xffEFF3FB);
 const Color kgreytilecolor = Color(0xffF3F9FF);
 const Color kgraphtilecolor = Color(0xffFCDDC3);
+const Color kgrey2tilecolor = Color(0xffEEF2F6);
 const Color kgreencolor = Color(0xff088444);
 const Color kbluecolor = Color(0xff01509D);

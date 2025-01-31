@@ -4,8 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import '../common/appcolors.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({super.key, required this.hint, required this.maxlines,required this.controller,required this.size,required this.contntpadding});
+  CustomTextField({super.key, required this.right,required this.left,required this.hint, required this.maxlines,required this.controller,required this.size,required this.contntpadding});
   String hint;
+   double left;
+    double right;
   var maxlines;
   double contntpadding;
   TextEditingController controller;
@@ -13,7 +15,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      padding: EdgeInsets.only(left: left, right: right, top: 10),
       child: SizedBox(
         height: size,
         child: TextField(

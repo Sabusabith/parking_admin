@@ -104,6 +104,7 @@ class AddNewArea extends StatelessWidget {
                 ),
               ),
               CustomTextField(
+                left: 20,right: 20,
                 contntpadding: 0,
                 maxlines: 1,
                 size: 45,
@@ -137,6 +138,8 @@ class AddNewArea extends StatelessWidget {
                 ),
               ),
               CustomTextField(
+                                left: 20,right: 20,
+
                 contntpadding: 25,
                 maxlines: 3,
                 size: 70,
@@ -173,6 +176,8 @@ class AddNewArea extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomTextField(
+                                      left: 20,right: 20,
+
                       contntpadding: 0,
                       maxlines: 1,
                       size: 45,

@@ -47,7 +47,7 @@ class Dashboard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset(
-                    "assets/icons/loc.svg",
+                    "assets/icons/location.svg",color: Colors.black,
                     height: 20,
                   ),
                   Text(

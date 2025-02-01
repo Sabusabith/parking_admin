@@ -42,6 +42,7 @@ dependencies:
   flutter_otp_text_field: ^1.4.0+2
   syncfusion_flutter_charts: ^27.2.4
   flutter_svg_provider: ^1.0.7
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:

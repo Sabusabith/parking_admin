@@ -216,8 +216,8 @@ class MyList extends StatelessWidget {
                                                         Colors.grey.shade900),
                                               ),
                                               SvgPicture.asset(
-                                                "assets/icons/loc.svg",
-                                                color: ksecndrycolor,
+                                                "assets/icons/location.svg",
+                                               
                                                 height: 15,
                                               )
                                             ],

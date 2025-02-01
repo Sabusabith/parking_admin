@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/core/controllers/add_new_area_controller.dart/add_new_area_controller.dart';
@@ -39,8 +40,8 @@ class Contactdetails extends StatelessWidget {
           ),
         ),
         CustomTextField(
-                          left: 20,right: 20,
-
+          left: 20,
+          right: 20,
           contntpadding: 0,
           maxlines: 1,
           size: 45,
@@ -67,8 +68,8 @@ class Contactdetails extends StatelessWidget {
           ),
         ),
         CustomTextField(
-                          left: 20,right: 20,
-
+          left: 20,
+          right: 20,
           contntpadding: 0,
           maxlines: 1,
           size: 45,
@@ -528,7 +529,6 @@ class Contactdetails extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-             
                   child: Text(
                     "Parking Rate",
                     style: GoogleFonts.publicSans(
@@ -541,20 +541,26 @@ class Contactdetails extends StatelessWidget {
             ],
           ),
         ),
-      
+
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-                child: CustomTextField(right: 0,left: 20,
+                child: CustomTextField(
+                    right: 0,
+                    left: 20,
                     hint: "25",
                     maxlines: 1,
                     controller: slotcapacitycontroller,
                     size: 45,
                     contntpadding: 0)),
-                    SizedBox(width: 15,),
+            SizedBox(
+              width: 15,
+            ),
             Expanded(
-                child: CustomTextField(left: 0,right: 20,
+                child: CustomTextField(
+                    left: 0,
+                    right: 20,
                     hint: "50/h",
                     maxlines: 1,
                     controller: slotcapacitycontroller,
@@ -563,7 +569,159 @@ class Contactdetails extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 100,
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Row(
+            children: [
+              Text(
+                "Value-Added Benefits",
+                style: GoogleFonts.publicSans(
+                    color: Colors.grey.shade900, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        controller.isChecked1.value =
+                            !controller.isChecked1.value;
+                      },
+                      child: Container(
+                        height: 18,
+                        width: 16.88,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ksecndrycolor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: controller.isChecked1.value
+                            ? Center(
+                                child: SvgPicture.asset(
+                                  "assets/icons/check.svg",
+                                  height: 7.75,
+                                ),
+                              )
+                            : null,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'CCTV',
+                    style: GoogleFonts.publicSans(
+                        color: Colors.grey.shade900,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              SizedBox(width: 15),
+              Row(
+                children: [
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        controller.isChecked2.value =
+                            !controller.isChecked2.value;
+                      },
+                      child: Container(
+                        height: 18,
+                        width: 16.88,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ksecndrycolor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: controller.isChecked2.value
+                            ? Center(
+                                child: SvgPicture.asset(
+                                  "assets/icons/check.svg",
+                                  height: 7.75,
+                                ),
+                              )
+                            : null,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Ev-Charging',
+                    style: GoogleFonts.publicSans(
+                        color: Colors.grey.shade900,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              SizedBox(width: 15),
+              Row(
+                children: [
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        controller.isChecked3.value =
+                            !controller.isChecked3.value;
+                      },
+                      child: Container(
+                        height: 18,
+                        width: 16.88,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: ksecndrycolor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: controller.isChecked3.value
+                            ? Center(
+                                child: SvgPicture.asset(
+                                  "assets/icons/check.svg",
+                                  height: 7.75,
+                                ),
+                              )
+                            : null,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Covered Parking',
+                    style: GoogleFonts.publicSans(
+                        color: Colors.grey.shade900,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        
+        SizedBox(
+          height: size.height/7,
         ),
       ],
     );

@@ -36,4 +36,9 @@ class AddNewAreaController extends GetxController {
   void toggleSwitchSeven(bool value) {
     isSwitchSevenOn.value = value;
   }
+
+  //checked box data
+  var isChecked1 = false.obs;
+  var isChecked2 = false.obs;
+  var isChecked3 = false.obs;
 }

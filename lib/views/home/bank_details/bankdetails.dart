@@ -160,7 +160,9 @@ class Bankdetails extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 35,)
+                          SizedBox(
+                            height: 35,
+                          )
                         ],
                       ),
                     ],

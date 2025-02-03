@@ -563,7 +563,7 @@ class Contactdetails extends StatelessWidget {
                     right: 20,
                     hint: "50/h",
                     maxlines: 1,
-                    controller: slotcapacitycontroller,
+                    controller: parkingratecontroller,
                     size: 45,
                     contntpadding: 0)),
           ],

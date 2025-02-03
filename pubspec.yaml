@@ -37,12 +37,13 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
   get: ^4.6.6
-  flutter_svg: ^2.0.17
+  flutter_svg: ^1.0.2
   smooth_page_indicator: ^1.2.0+3
   flutter_otp_text_field: ^1.4.0+2
   syncfusion_flutter_charts: ^27.2.4
-  flutter_svg_provider: ^1.0.7
   dropdown_button2: ^2.3.9
+  carousel_slider: ^5.0.0
+  book_my_seat: ^1.0.1
 
 dev_dependencies:
   flutter_test:

@@ -187,7 +187,7 @@ class AddNewArea extends StatelessWidget {
                         maxlines: 1,
                         size: 45,
                         hint: "BTM-Layout-phase 1 ",
-                        controller: areanamecontroller,
+                        controller: arealocationcontroller,
                       ),
                     ),
                     SizedBox(

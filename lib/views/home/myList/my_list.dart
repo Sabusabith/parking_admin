@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/utils/dummy_datas/my_list_data.dart';
 import 'package:parking_app_admin/views/home/myList/add_new_area/add_new_area.dart';
+import 'package:parking_app_admin/views/home/myList/booking_list/booking_list.dart';
 
 class MyList extends StatelessWidget {
   const MyList({super.key});
@@ -25,7 +27,9 @@ class MyList extends StatelessWidget {
               color: Colors.white,
             )),
             onPressed: () {
-              _showNewAreaBottomsheet(context,);
+              _showNewAreaBottomsheet(
+                context,
+              );
             },
           ),
           Text(
@@ -148,243 +152,258 @@ class MyList extends StatelessWidget {
                     SizedBox(
                       height: 12,
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      width: size.width,
-                      height: 160,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: ksecndrycolor)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 4, right: 4, bottom: 4, top: 4),
-                        child: Stack(children: [
-                          Container(
-                            height: 150,
-                            width: size.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: kredtilecolor),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                    child: Stack(children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      // color: Colors.deepPurple[300],
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    child: Center(
-                                        child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(14),
-                                            child: Image.asset(
-                                              mylistData[index].img,
-                                              fit: BoxFit.cover,
-                                            ))),
-                                    height: 130,
-                                  ),
-                                  Positioned(
-                                      bottom: 8,
-                                      right: 15,
-                                      child: SvgPicture.asset(
-                                        "assets/icons/photo.svg",
-                                        height: 15,
-                                      ))
-                                ])),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                    flex: 2,
-                                    child: Container(
-                                      // color: Colors.deepPurple[200],
-                                      height: 130,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "BTM-Layout ",
-                                                style: GoogleFonts.publicSans(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w700,
-                                                    color:
-                                                        Colors.grey.shade900),
-                                              ),
-                                              SvgPicture.asset(
-                                                "assets/icons/location.svg",
-                                               
-                                                height: 15,
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Near- Visal Mart",
-                                                style: GoogleFonts.publicSans(
-                                                    color: Colors.grey.shade900,
-                                                    fontSize: 10,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ],
-                                          ),
-
-                                          ///slot details.....
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Total Slots ",
-                                                style: GoogleFonts.publicSans(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        Colors.grey.shade900),
-                                              ),
-                                              SizedBox(
-                                                width: 20,
-                                              ),
-                                              Text(
-                                                "Available Slots ",
-                                                style: GoogleFonts.publicSans(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        Colors.grey.shade900),
-                                              )
-                                            ],
-                                          ),
-
-                                          //slot points details..
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "45 ",
-                                                    style:
-                                                        GoogleFonts.publicSans(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color:
-                                                                ksecndrycolor),
-                                                  ),
-                                                  Container(
-                                                    width: 10,
-                                                    height: 10,
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color:
-                                                            Color(0xff01509D)),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 45,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "12 ",
-                                                    style:
-                                                        GoogleFonts.publicSans(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color:
-                                                                ksecndrycolor),
-                                                  ),
-                                                  Container(
-                                                    width: 10,
-                                                    height: 10,
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: kgreencolor),
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 7,
-                                          ),
-                                          //parking rate....
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Parking Rate: ",
-                                                style: GoogleFonts.publicSans(
-                                                    color: Colors.grey.shade900,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "4wheel 100rs/hr",
-                                                style: GoogleFonts.publicSans(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        Colors.grey.shade900),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                "2wheeler 60rs/hr",
-                                                style: GoogleFonts.publicSans(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        Colors.grey.shade900),
-                                              )
-                                            ],
-                                          ),
-                                        ],
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => BookingList());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        width: size.width,
+                        height: 160,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(color: ksecndrycolor)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 4, right: 4, bottom: 4, top: 4),
+                          child: Stack(children: [
+                            Container(
+                              height: 150,
+                              width: size.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: kredtilecolor),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      child: Stack(children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        // color: Colors.deepPurple[300],
+                                        borderRadius: BorderRadius.circular(14),
                                       ),
-                                    )),
-                              ],
+                                      child: Center(
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              child: Image.asset(
+                                                mylistData[index].img,
+                                                fit: BoxFit.cover,
+                                              ))),
+                                      height: 130,
+                                    ),
+                                    Positioned(
+                                        bottom: 8,
+                                        right: 15,
+                                        child: SvgPicture.asset(
+                                          "assets/icons/photo.svg",
+                                          height: 15,
+                                        ))
+                                  ])),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        // color: Colors.deepPurple[200],
+                                        height: 130,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "BTM-Layout ",
+                                                  style: GoogleFonts.publicSans(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color:
+                                                          Colors.grey.shade900),
+                                                ),
+                                                SvgPicture.asset(
+                                                  "assets/icons/location.svg",
+                                                  height: 15,
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Near- Visal Mart",
+                                                  style: GoogleFonts.publicSans(
+                                                      color:
+                                                          Colors.grey.shade900,
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+
+                                            ///slot details.....
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Total Slots ",
+                                                  style: GoogleFonts.publicSans(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Colors.grey.shade900),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  "Available Slots ",
+                                                  style: GoogleFonts.publicSans(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Colors.grey.shade900),
+                                                )
+                                              ],
+                                            ),
+
+                                            //slot points details..
+                                            SizedBox(
+                                              height: 3,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "45 ",
+                                                      style: GoogleFonts
+                                                          .publicSans(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color:
+                                                                  ksecndrycolor),
+                                                    ),
+                                                    Container(
+                                                      width: 10,
+                                                      height: 10,
+                                                      decoration: BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: Color(
+                                                              0xff01509D)),
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  width: 45,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "12 ",
+                                                      style: GoogleFonts
+                                                          .publicSans(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color:
+                                                                  ksecndrycolor),
+                                                    ),
+                                                    Container(
+                                                      width: 10,
+                                                      height: 10,
+                                                      decoration: BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: kgreencolor),
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 7,
+                                            ),
+                                            //parking rate....
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Parking Rate: ",
+                                                  style: GoogleFonts.publicSans(
+                                                      color:
+                                                          Colors.grey.shade900,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 3,
+                                            ),
+
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "4wheel 100rs/hr",
+                                                  style: GoogleFonts.publicSans(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Colors.grey.shade900),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  "2wheeler 60rs/hr",
+                                                  style: GoogleFonts.publicSans(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          Colors.grey.shade900),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
-                          Positioned(
-                              right: 10,
-                              top: 8,
-                              child: SvgPicture.asset(
-                                "assets/icons/dot.svg",
-                                height: 27,
-                                width: 27,
-                              ))
-                        ]),
+                            Positioned(
+                                right: 10,
+                                top: 8,
+                                child: SvgPicture.asset(
+                                  "assets/icons/dot.svg",
+                                  height: 27,
+                                  width: 27,
+                                ))
+                          ]),
+                        ),
                       ),
                     ),
                   ],
@@ -398,19 +417,17 @@ class MyList extends StatelessWidget {
   }
 
   _showNewAreaBottomsheet(BuildContext context) {
-  return showModalBottomSheet(
-    backgroundColor: kbgcolor,
-    context: context,
-    isScrollControlled: true,
-    
-    builder: (BuildContext context) {
-      // Use Padding and SafeArea to ensure proper boundaries
-      return Padding(
-        padding: const EdgeInsets.only(top: 50),
-        child: AddNewArea(),
-      );
-    },
-  );
-}
-
+    return showModalBottomSheet(
+      backgroundColor: kbgcolor,
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        // Use Padding and SafeArea to ensure proper boundaries
+        return Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: AddNewArea(),
+        );
+      },
+    );
+  }
 }

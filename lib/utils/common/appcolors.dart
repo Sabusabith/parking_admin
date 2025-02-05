@@ -11,3 +11,6 @@ const Color kgraphtilecolor = Color(0xffFCDDC3);
 const Color kgrey2tilecolor = Color(0xffEEF2F6);
 const Color kgreencolor = Color(0xff088444);
 const Color kbluecolor = Color(0xff01509D);
+
+const Color kblackcolor = Color(0xff062441);
+const Color kpeachtilecolor = Color(0xffFFE7E7);

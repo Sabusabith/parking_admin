@@ -190,14 +190,52 @@ class AddNewArea extends StatelessWidget {
                         controller: arealocationcontroller,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              //alert dialogue for location............
+                              Get.dialog(AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                contentPadding: EdgeInsets.all(0),
+                                content: Stack(
+                                  children: [
+                                    Container(
+                                      height: 375,
+                                      width: 560,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: Image.asset(
+                                          "assets/images/image 6.png",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 5,
+                                      right: 5,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: SvgPicture.asset(
+                                          "assets/icons/close.svg",
+                                          height: 30,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ));
+                            },
                             child: Image.asset(
                               "assets/icons/Location.png",
                               color: ksecndrycolor,

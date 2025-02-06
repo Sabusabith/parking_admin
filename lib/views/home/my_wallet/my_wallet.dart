@@ -51,16 +51,25 @@ class MyWallet extends StatelessWidget {
                         )),
                   ),
                 ),
-
-                //Details container
-                WalletDataCard(),
-                //payoutbutton...
-                PayoutButton()
+                Positioned( top: 50,left: 20,right: 20,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Details container
+                      WalletDataCard(),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      //payoutbutton...
+                      PayoutButton(),
+                    ],
+                  ),
+                ),
               ],
             )),
 
             // Fixed Bottom Sheet
-          BottomScreen()
+            BottomScreen()
           ],
         ),
       ),

@@ -176,9 +176,9 @@ class MyList extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                      child: Stack(children: [
-                                    Container(
+                                  SizedBox(width: 5,),
+                                  Stack(children: [
+                                    Container(width: 94,
                                       decoration: BoxDecoration(
                                         // color: Colors.deepPurple[300],
                                         borderRadius: BorderRadius.circular(14),
@@ -195,14 +195,14 @@ class MyList extends StatelessWidget {
                                     ),
                                     Positioned(
                                         bottom: 8,
-                                        right: 15,
+                                        right: 8,
                                         child: SvgPicture.asset(
                                           "assets/icons/photo.svg",
                                           height: 15,
                                         ))
-                                  ])),
+                                  ]),
                                   SizedBox(
-                                    width: 5,
+                                    width: 10,
                                   ),
                                   Expanded(
                                       flex: 2,

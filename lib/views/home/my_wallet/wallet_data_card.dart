@@ -23,7 +23,7 @@ class WalletDataCard extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                // color: Colors.deepPurple[100],
+             
                 height: 200,
                 child: Column(
                   children: [
@@ -181,12 +181,18 @@ class WalletDataCard extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            "Transfer left: 7/7",
-                            style: GoogleFonts.publicSans(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey.shade700),
+                          Expanded(
+                            child: Container(
+                              child: Text(
+                                "Transfer left: 7/7",
+                                style: GoogleFonts.publicSans(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey.shade700),
+                                    overflow: TextOverflow.ellipsis,
+                                    
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -196,8 +202,8 @@ class WalletDataCard extends StatelessWidget {
               ),
             ),
             Container(
-              width: 160,
               height: 215,
+              width: 140,
               child: Stack(children: [
                 Positioned.fill(
                   child: Row(
@@ -225,9 +231,13 @@ class WalletDataCard extends StatelessWidget {
                 Positioned(
                   right: 1,
                   bottom: 1,
-                  child: Image.asset(
-                    "assets/images/brick.png",
-                    height: 137.73,
+                  child: Container(
+             width: 120,height: 120,
+                    decoration: BoxDecoration(     
+                        image: DecorationImage(
+                            image: AssetImage(
+                      "assets/images/brick.png",
+                    ))),
                   ),
                 )
               ]),

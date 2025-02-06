@@ -27,7 +27,7 @@ class AddNewSlot extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

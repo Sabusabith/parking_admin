@@ -19,8 +19,7 @@ class Graphtile extends StatelessWidget {
     ];
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      height: 223,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       width: size.width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -29,7 +28,6 @@ class Graphtile extends StatelessWidget {
         padding: const EdgeInsets.all(3),
         child: Container(
           width: size.width,
-          height: 215,
           decoration: BoxDecoration(
               color: kgraphtilecolor, borderRadius: BorderRadius.circular(28)),
           child: Column(
@@ -55,62 +53,73 @@ class Graphtile extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              Expanded(
-                child: Container(
-                  child: Stack(children: [
-                    SfCircularChart(
-                      legend: Legend(
-                          itemPadding: 15,
-                          alignment: ChartAlignment.near,
-                          width: "200",
+              Container(
+                width: size.width,
+                height: 150,
+                child: SfCircularChart(
+                  margin: EdgeInsets.only(
+                      right: size.width > 390
+                          ? 40
+                          : size.width < 375
+                              ? 15
+                              : 20,
+                      left: 5),
+                  annotations: [
+                    CircularChartAnnotation(
+                        widget: Text(
+                      "88%",
+                      style: GoogleFonts.publicSans(
+                        color: Colors.black,
+                        fontSize: 19.73,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ))
+                  ],
+                  legend: Legend(
+                      itemPadding: 15,
+                      alignment: ChartAlignment.near,
+                      width: "200",
+                      textStyle: GoogleFonts.publicSans(
+                          fontSize: size.width < 375 ? 11 : 13.81,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade900),
+                      isVisible: true,
+                      position: LegendPosition.right,
+                      padding: 10,
+                      title: LegendTitle(
+                          text: "Available Space: 27",
                           textStyle: GoogleFonts.publicSans(
-                              fontSize: 13.81,
+                              fontSize: size.width < 375 ? 11 : 13.81,
                               fontWeight: FontWeight.w500,
-                              color: Colors.grey.shade900),
-                          isVisible: true,
-                          position: LegendPosition.right,
-                          padding: 10,
-                          title: LegendTitle(
-                              text: "Available Space: 27",
-                              textStyle: GoogleFonts.publicSans(
-                                  fontSize: 13.81,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey.shade900))),
-                      series: <DoughnutSeries<ChartData, String>>[
-                        DoughnutSeries<ChartData, String>(
-                          dataSource: chartData,
-                          cornerStyle: CornerStyle.bothCurve,
+                              color: Colors.grey.shade900))),
+                  series: <DoughnutSeries<ChartData, String>>[
+                    DoughnutSeries<ChartData, String>(
+                      dataLabelMapper: (datum, index) {
+                        print(datum.FreeSlots.toString());
+                        return datum.toString();
+                      },
+                      dataSource: chartData,
+                      cornerStyle: CornerStyle.bothCurve,
 
-                          endAngle: 180, startAngle: 180,
-                          legendIconType: LegendIconType.circle,
+                      endAngle: 180, startAngle: 180,
+                      legendIconType: LegendIconType.circle,
 
-                          xValueMapper: (ChartData data, _) => data.BookedSlots,
-                          yValueMapper: (ChartData data, _) => data.FreeSlots,
-                          pointColorMapper: (ChartData data, _) => data.color,
-                          innerRadius: '54%', // For a donut-like appearance
-                          radius: "68",
-                          dataLabelSettings:
-                              const DataLabelSettings(isVisible: false),
-                        ),
-                      ],
+                      xValueMapper: (ChartData data, _) => data.BookedSlots,
+                      yValueMapper: (ChartData data, _) => data.FreeSlots,
+                      pointColorMapper: (ChartData data, _) => data.color,
+                      innerRadius: '54%', // For a donut-like appearance
+                      radius: "68",
+                      dataLabelSettings:
+                          const DataLabelSettings(isVisible: false),
                     ),
-                    Positioned(
-                        top: 57,
-                        left: 65,
-                        child: Text(
-                          "88%",
-                          style: GoogleFonts.publicSans(
-                              fontSize: 19.73,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade900),
-                        ))
-                  ]),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 15),
+                padding:  EdgeInsets.only(right:size.width>390? 40: 30),
                 child: Transform(
-                  transform: Matrix4.translationValues(0, -30, 0),
+                  transform: Matrix4.translationValues(
+                      0, size.width < 375 ? -50 : -30, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -118,7 +127,7 @@ class Graphtile extends StatelessWidget {
                         "Total Revenue: 12750/-",
                         style: GoogleFonts.publicSans(
                             color: Colors.grey.shade900,
-                            fontSize: 13.81,
+                            fontSize: size.width < 375 ? 11 : 13.81,
                             fontWeight: FontWeight.w600),
                       ),
                     ],

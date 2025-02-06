@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
     final HomeController controller = Get.put(HomeController());
 
     Size size = MediaQuery.of(context).size;
-
+print("screen width = ${size.width}");
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(25),
@@ -50,7 +50,6 @@ class Home extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   Get.to(NotificationScreen());
-                 
                 },
                 child: SvgPicture.asset(
                   "assets/icons/bell.svg",

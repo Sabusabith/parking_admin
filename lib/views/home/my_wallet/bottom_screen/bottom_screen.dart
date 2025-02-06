@@ -13,7 +13,7 @@ class BottomScreen extends StatelessWidget {
 
     return Container(
       width: size.width,
-      height: size.height / 2.7, // Height for the bottom sheet
+      height: size.height / 2.4, // Height for the bottom sheet
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(

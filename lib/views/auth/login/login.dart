@@ -142,48 +142,50 @@ class Login extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: "By continuing, i agree to the",
-                            style: GoogleFonts.publicSans(
-                              color: Colors.grey.shade900,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              text: "By continuing, i agree to the",
+                              style: GoogleFonts.publicSans(
+                                color: Colors.grey.shade900,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              children: [
+                                TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Get.to(() => Home());
+                                    },
+                                  text: " Terms of Service",
+                                  style: GoogleFonts.publicSans(
+                                    color: ksecndrycolor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: " & ",
+                                  style: GoogleFonts.publicSans(
+                                    color: Colors.grey.shade900,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Get.to(() => Home());
+                                    },
+                                  text: "Privacy Policy",
+                                  style: GoogleFonts.publicSans(
+                                    color: ksecndrycolor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
-                            children: [
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.to(() => Home());
-                                  },
-                                text: " Terms of Service",
-                                style: GoogleFonts.publicSans(
-                                  color: ksecndrycolor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              TextSpan(
-                                text: " & ",
-                                style: GoogleFonts.publicSans(
-                                  color: Colors.grey.shade900,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.to(() => Home());
-                                  },
-                                text: "Privacy Policy",
-                                style: GoogleFonts.publicSans(
-                                  color: ksecndrycolor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ],

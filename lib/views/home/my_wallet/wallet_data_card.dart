@@ -23,7 +23,6 @@ class WalletDataCard extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-             
                 height: 200,
                 child: Column(
                   children: [
@@ -189,8 +188,7 @@ class WalletDataCard extends StatelessWidget {
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey.shade700),
-                                    overflow: TextOverflow.ellipsis,
-                                    
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
@@ -232,8 +230,9 @@ class WalletDataCard extends StatelessWidget {
                   right: 1,
                   bottom: 1,
                   child: Container(
-             width: 120,height: 120,
-                    decoration: BoxDecoration(     
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
                       "assets/images/brick.png",

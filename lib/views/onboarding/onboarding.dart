@@ -87,20 +87,34 @@ class OnboardingPageView extends StatelessWidget {
               right: 0,
               bottom: 40,
               child: Center(
-                child: Container(
-                  width: 170,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: kprimerycolor,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Center(
-                      child: Text(
-                    "Next",
-                    style: GoogleFonts.publicSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey.shade900),
-                  )),
+                child: GestureDetector(
+                  onTap: () {
+                    if (_controller.currentPage.value < _pages.length - 1) {
+                      pageController.animateToPage(
+                        _controller.currentPage.value + 1,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.ease,
+                      );
+                    } else {
+                      // Navigate to Login when it's the last page
+                      Get.to(() => Login());
+                    }
+                  },
+                  child: Container(
+                    width: 170,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: kprimerycolor,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Center(
+                        child: Text(
+                      "Next",
+                      style: GoogleFonts.publicSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade900),
+                    )),
+                  ),
                 ),
               )),
 
@@ -108,9 +122,10 @@ class OnboardingPageView extends StatelessWidget {
           Positioned(
               right: 50,
               bottom: 55,
-              child: GestureDetector(onTap: () {
-                Get.to(()=>Login());
-              },
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(() => Login());
+                },
                 child: Text(
                   "Skip",
                   style: GoogleFonts.publicSans(
@@ -127,12 +142,12 @@ class OnboardingPageView extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       if (_controller.currentPage.value > 0) {
-              pageController.animateToPage(
-                _controller.currentPage.value - 1,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.ease,
-              );
-            }
+                        pageController.animateToPage(
+                          _controller.currentPage.value - 1,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      }
                     },
                     child: Text(
                       "Back",

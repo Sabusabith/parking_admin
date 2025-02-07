@@ -7,6 +7,7 @@ import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/my_wallet/bottom_screen/bottom_screen.dart';
 import 'package:parking_app_admin/views/home/my_wallet/payout_button.dart';
 import 'package:parking_app_admin/views/home/my_wallet/wallet_data_card.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MyWallet extends StatelessWidget {
   const MyWallet({super.key});
@@ -14,64 +15,81 @@ class MyWallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double screenHeight = size.height;
+    double screenWidth = size.width;
 
-    return Scaffold(
-      backgroundColor: kprimerycolor,
-      body: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: Column(
-          children: [
-            Expanded(
-                child: Stack(
-              children: [
-                Positioned(
-                  left: 20,
-                  top: 18,
-                  child: Text(
-                    "My Wallet",
-                    style: GoogleFonts.publicSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.grey.shade900),
-                  ),
-                ),
-                Positioned(
-                  right: 1,
-                  top: 1,
-                  child: Transform(
-                    transform: Matrix4.translationValues(0, -15, 0),
-                    child: RotationTransition(
-                        turns: new AlwaysStoppedAnimation(1 / 360),
-                        child: Image.asset(
-                          "assets/images/cube.png",
-                          fit: BoxFit.cover,
-                          height: 157.98,
-                          width: 157.98,
-                        )),
-                  ),
-                ),
-                Positioned( top: 50,left: 20,right: 20,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //Details container
-                      WalletDataCard(),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      //payoutbutton...
-                      PayoutButton(),
-                    ],
-                  ),
-                ),
-              ],
-            )),
+    print("Screen width: $screenWidth");
+    print("Screen height: $screenHeight");
 
-            // Fixed Bottom Sheet
-            BottomScreen()
-          ],
-        ),
+    return Container(
+      width: size.width,
+      height: size.height,
+      color: kprimerycolor,
+      child: Column(
+        children: [
+          // Top Section
+          Stack(children: [
+            Positioned(
+                left: 20,
+                right: -20,
+                top: 10,
+                child: Image.asset(
+                  "images/walletbg.png",
+                  fit: BoxFit.cover,
+                )),
+            Container(
+              width: screenWidth,
+              height: 380,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: screenHeight * 0.07, // Dynamic height
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: WalletDataCard(),
+                  ),
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: PayoutButton(),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+    
+          // Bottom Section (Responsive Size)
+          Flexible(
+            flex: 1, // This takes up the rest of the space dynamically
+            child: SizedBox(
+              height: max(screenHeight * 0.8, 240), // Ensure minimum height
+              child: GestureDetector(
+                  onVerticalDragUpdate: (details) {
+                    // Detect swipe up
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled:
+                          true, // To allow full screen height adjustment
+                      backgroundColor: Colors.transparent,
+                      builder: (context) =>
+                          BottomScreen(), // Display BottomScreen as Modal
+                    );
+                  },
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled:
+                          true, // To allow full screen height adjustment
+                      backgroundColor: Colors.transparent,
+                      builder: (context) =>
+                          BottomScreen(), // Display BottomScreen as Modal
+                    );
+                  },
+                  child: const BottomScreen()),
+            ),
+          ),
+        ],
       ),
     );
   }

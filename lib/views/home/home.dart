@@ -28,6 +28,7 @@ print("screen width = ${size.width}");
         preferredSize: Size.fromHeight(25),
         child: Obx(() {
           return AppBar(
+            elevation: 0,
             toolbarHeight: 25,
             surfaceTintColor: Colors.transparent,
             backgroundColor: controller.selectedIndex.value == 3
@@ -64,7 +65,11 @@ print("screen width = ${size.width}");
         }),
       ),
       backgroundColor: kbgcolor,
-      body: Obx(() => SizedBox(
+      body: Obx(() => Container(color: controller.selectedIndex.value == 3
+                ? kprimerycolor
+                : controller.selectedIndex.value == 4
+                    ? kprimerycolor
+                    : kbgcolor , 
             width: size.width,
             height: size.height,
             child: _screens[controller.selectedIndex.value],

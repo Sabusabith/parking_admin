@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,12 +11,13 @@ class BottomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double bottomSheetHeight =
+        max(screenHeight * 0.8, 240); // Minimum height of 250px
 
     return Container(
-      width: size.width,
-      height: size.height / 2.4, // Height for the bottom sheet
-      decoration: BoxDecoration(
+      height: bottomSheetHeight,
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(40),
@@ -23,7 +26,13 @@ class BottomScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 30),
+            const SizedBox(height: 20),
+          Container(
+            width: 80,
+            height: 5,
+            color: Colors.grey.shade300,
+          ),
+          const SizedBox(height: 20),
           // Header Row
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -89,19 +98,20 @@ class BottomScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    width: size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    width: double.infinity,
                     height: 45,
                     decoration: BoxDecoration(
-                        color: Color(0xffDCEAF6),
-                        borderRadius: BorderRadius.circular(30)),
+                      color: const Color(0xffDCEAF6),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     child: TabBar(
                       indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorPadding:
-                          EdgeInsets.only(left: 4, right: 4, top: 4, bottom: 4),
+                      indicatorPadding: const EdgeInsets.all(4),
                       indicator: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(25)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                       dividerColor: Colors.transparent,
                       labelColor: ksecndrycolor,
                       unselectedLabelColor: Colors.grey.shade900,
@@ -119,17 +129,19 @@ class BottomScreen extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: [
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 "1-Jan-2025",
                                 style: GoogleFonts.publicSans(
-                                    color: Colors.grey.shade900,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
+                                  color: Colors.grey.shade900,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ],
                           ),
@@ -137,9 +149,8 @@ class BottomScreen extends StatelessWidget {
                         Expanded(
                           child: TabBarView(
                             children: [
-                            AllTransactionTab(),
-                              // Tab 2 content
-                              Center(child: Text("Pending Transactions")),
+                              AllTransactionTab(),
+                              const Center(child: Text("Pending Transactions")),
                             ],
                           ),
                         ),

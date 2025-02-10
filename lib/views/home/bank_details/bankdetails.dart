@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -22,25 +26,45 @@ class Bankdetails extends StatelessWidget {
         child: Column(
           children: [
             // Header
+
             SizedBox(
-              height: size.height / 2.9,
+              height: size.height < 700 ? size.height / 2.5 : size.height / 2.9,
               width: size.width,
               child: Stack(
                 children: [
+                  //background image...
                   Positioned.fill(
-                    child: Image.asset(
-                      "assets/images/bg.png",
-                      fit: BoxFit.fill,
+                    left: size.width > 700 ? -28 : -5,
+                    right: size.width > 700 ? -28 : -5,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(35),
+                        bottomRight: Radius.circular(35),
+                      ),
+                      child: Image.asset(
+                        "assets/images/Group 155.png",
+                        width: size.width,
+                        height: size.height < 700
+                            ? size.height / 2.5
+                            : size.height / 2.9,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   Container(
                     width: size.width,
-                    height: size.height / 2.9,
+                    height: size.height < 700
+                        ? size.height / 2.5
+                        : size.height / 2.9,
                     margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(35),
-                        bottomRight: Radius.circular(35),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: size.width > 700
+                            ? Radius.circular(52)
+                            : Radius.circular(35),
+                        bottomRight: size.width > 700
+                            ? Radius.circular(52)
+                            : Radius.circular(35),
                       ),
                       color: Colors.deepPurple.withOpacity(.4),
                     ),
@@ -78,7 +102,7 @@ class Bankdetails extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 25),
+                          SizedBox(height: size.height > 860 ? 45 : 25),
                           Container(
                             width: 90,
                             height: 90,
@@ -86,7 +110,10 @@ class Bankdetails extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: Colors.white,
                             ),
-                            child: Image.asset("assets/icons/axis.png"),
+                            
+                            child: Image.asset("assets/images/axis2.png"),
+
+                            
                           ),
                           const SizedBox(height: 15),
                           Text(
@@ -115,7 +142,8 @@ class Bankdetails extends StatelessWidget {
             ),
 
             // Main content (list + button)
-            Expanded(
+            Flexible(
+              flex: 1,
               child: Obx(() => ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     children: [

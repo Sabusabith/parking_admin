@@ -41,7 +41,7 @@ class AddNewArea extends StatelessWidget {
                             height: 20,
                           ),
                         ),
-                        Spacer(),
+                       const Spacer(),
                         GestureDetector(
                           onTap: () {
                             Get.back();
@@ -54,7 +54,7 @@ class AddNewArea extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                 const SizedBox(
                     height: 15,
                   ),
                   Padding(
@@ -66,7 +66,7 @@ class AddNewArea extends StatelessWidget {
                           "assets/icons/area.svg",
                           height: 30,
                         ),
-                        SizedBox(
+                       const SizedBox(
                           width: 5,
                         ),
                         Text(
@@ -79,7 +79,7 @@ class AddNewArea extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                 const SizedBox(
                     height: 25,
                   ),
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "624678203760",
+    "project_id": "parking-admin-93a60",
+    "storage_bucket": "parking-admin-93a60.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624678203760:android:6d17990c0117dd4964dfb5",
+        "android_client_info": {
+          "package_name": "com.example.parking_app_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRRzp-TjsSj45NzpL2c-bHufTUsqxlyq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

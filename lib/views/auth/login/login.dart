@@ -10,8 +10,8 @@ import 'package:parking_app_admin/views/home/home.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
-  final phoecontroller = TextEditingController();
-  final authcontroller = Get.put(AuthController());
+ final phoneController = TextEditingController();
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class Login extends StatelessWidget {
                   // Login Title
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Login With Mobile",
@@ -60,7 +61,8 @@ class Login extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey.shade800),
                     ),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(width: 15),
                         SizedBox(
@@ -92,7 +94,7 @@ class Login extends StatelessWidget {
                           child: Stack(
                             children: [
                               TextField(
-                                controller: phoecontroller,
+                                controller: phoneController,
                                 keyboardType: TextInputType.phone,
                                 cursorColor: Colors.grey.shade700,
                                 cursorHeight: 18,
@@ -106,14 +108,14 @@ class Login extends StatelessWidget {
                                   ),
                                 ),
                                 onChanged: (value) {
-                                  authcontroller.istyping.value = true;
-                                  phoecontroller.value.text.isEmpty
-                                      ? authcontroller.istyping.value = false
+                                  authController.isTyping.value = true;
+                                   phoneController.value.text.isEmpty
+                                      ? authController.isTyping.value = false
                                       : true;
                                 },
                               ),
                               Obx(
-                                () => authcontroller.istyping.value
+                                () => authController.isTyping.value
                                     ? SizedBox()
                                     : Positioned(
                                         left: 105,
@@ -140,7 +142,8 @@ class Login extends StatelessWidget {
                   // Terms and Privacy
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           child: RichText(
@@ -195,8 +198,13 @@ class Login extends StatelessWidget {
 
                   // Continue Button
                   GestureDetector(
-                    onTap: () {
-                      Get.to(() => OTPScreen());
+                   onTap: () {
+                      String phoneNumber = "+91${phoneController.text.trim()}";
+                      if (phoneNumber.length < 10) {
+                        Get.snackbar("Error", "Enter a valid phone number");
+                      } else {
+                        authController.signInWithPhoneNumber(phoneNumber);
+                      }
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 20),
@@ -223,7 +231,8 @@ class Login extends StatelessWidget {
                   // Help Section
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         RichText(
                           text: TextSpan(

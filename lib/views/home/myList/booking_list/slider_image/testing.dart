@@ -135,9 +135,9 @@ class _BusSeatSelectionState extends State<BusSeatSelection> {
                               rows: 4, // Ensure rows = 10
                               cols: 10, // Ensure cols = 7
                               seatSvgSize: 50,
-                              pathSelectedSeat: 'assets/icons/car2.svg',
-                              pathDisabledSeat: 'assets/icons/bike1.svg',
-                              pathSoldSeat: 'assets/icons/bike2.svg',
+                              pathSelectedSeat: 'assets/icons/car1.svg',
+                              pathDisabledSeat: 'assets/icons/car1.svg',
+                              pathSoldSeat: 'assets/icons/car2.svg',
                               pathUnSelectedSeat: 'assets/icons/car1.svg',
                               currentSeatsState: [
                                 [

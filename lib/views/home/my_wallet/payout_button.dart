@@ -13,54 +13,49 @@ class PayoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     MyWalletController controller = Get.put(MyWalletController());
     Size size = MediaQuery.of(context).size;
-    return Positioned(
-      bottom: 15,
-      left: 20,
-      right: 20,
-      child: Container(
-        height: 54,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              Text(
-                "Weekly Paid Out",
-                style: GoogleFonts.publicSans(
-                    color: Colors.grey.shade900,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              SvgPicture.asset(
-                "assets/icons/about.svg",
-                height: 15,
-              ),
-              // The Switch Widget
-              Spacer(),
-              Obx(
-                () => SizedBox(height: 35,
-                  child: FittedBox(
-                    child: Switch(
-                      
-                        trackOutlineColor: WidgetStatePropertyAll(kprimerycolor),
-                        trackOutlineWidth: WidgetStatePropertyAll(1),
-                        value: controller.isSwitchOn.value,
-                        onChanged: controller.toggleSwitch,
-                        activeColor: kprimerycolor,
+    return Container(
+      height: 54,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20), color: Colors.white),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: [
+            Text(
+              "Weekly Paid Out",
+              style: GoogleFonts.publicSans(
+                  color: Colors.grey.shade900,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            SvgPicture.asset(
+              "assets/icons/about.svg",
+              height: 15,
+            ),
+            // The Switch Widget
+            Spacer(),
+            Obx(
+              () => SizedBox(height: 35,
+                child: FittedBox(
+                  child: Switch(
                     
-                        // activeTrackColor: kprimerycolor,
-                        trackColor: WidgetStatePropertyAll(Colors.white),
-                        thumbColor: WidgetStatePropertyAll(kprimerycolor),
-                        inactiveThumbColor: kprimerycolor),
-                  ),
+                      trackOutlineColor: WidgetStatePropertyAll(kprimerycolor),
+                      trackOutlineWidth: WidgetStatePropertyAll(1),
+                      value: controller.isSwitchOn.value,
+                      onChanged: controller.toggleSwitch,
+                      activeColor: kprimerycolor,
+                  
+                      // activeTrackColor: kprimerycolor,
+                      trackColor: WidgetStatePropertyAll(Colors.white),
+                      thumbColor: WidgetStatePropertyAll(kprimerycolor),
+                      inactiveThumbColor: kprimerycolor),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

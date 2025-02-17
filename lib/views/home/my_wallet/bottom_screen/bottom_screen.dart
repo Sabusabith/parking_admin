@@ -12,8 +12,7 @@ class BottomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
-    final double bottomSheetHeight =
-        max(screenHeight * 0.8, 240); // Minimum height of 250px
+    final double bottomSheetHeight = max(screenHeight * 0.8, 240); // Minimum height of 240px
 
     return Container(
       height: bottomSheetHeight,
@@ -26,7 +25,7 @@ class BottomScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-            const SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             width: 80,
             height: 5,
@@ -91,7 +90,7 @@ class BottomScreen extends StatelessWidget {
           ),
           const SizedBox(height: 15),
 
-          // TabBar
+          // TabBar and TabBarView
           Expanded(
             child: DefaultTabController(
               length: 2, // Two tabs
@@ -126,34 +125,29 @@ class BottomScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Column(
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "1-Jan-2025",
-                                style: GoogleFonts.publicSans(
-                                  color: Colors.grey.shade900,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                        Text(
+                          "1-Jan-2025",
+                          style: GoogleFonts.publicSans(
+                            color: Colors.grey.shade900,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Expanded(
-                          child: TabBarView(
-                            children: [
-                              AllTransactionTab(),
-                              const Center(child: Text("Pending Transactions")),
-                            ],
-                          ),
-                        ),
+                      ],
+                    ),
+                  ),
+                  // Expanded TabBarView
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        AllTransactionTab(),
+                        const Center(child: Text("Pending Transactions")),
                       ],
                     ),
                   ),

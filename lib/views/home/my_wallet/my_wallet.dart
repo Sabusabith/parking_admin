@@ -34,27 +34,29 @@ class MyWallet extends StatelessWidget {
                 right: -20,
                 top: 10,
                 child: Image.asset(
-                  "images/walletbg.png",
+                  "assets/images/walletbg.png",
                   fit: BoxFit.cover,
                 )),
-            Container(
-              width: screenWidth,
-              height: 380,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: screenHeight * 0.07, // Dynamic height
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: WalletDataCard(),
-                  ),
-                  const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: PayoutButton(),
-                  ),
-                ],
+            Align(alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: screenWidth,
+                height: 380,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: screenHeight * 0.07, // Dynamic height
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: WalletDataCard(),
+                    ),
+                    const SizedBox(height: 20),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: PayoutButton(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ]),

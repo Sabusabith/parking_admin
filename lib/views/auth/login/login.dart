@@ -5,12 +5,11 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/core/controllers/auth_controller/auth_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
-import 'package:parking_app_admin/views/auth/otp/otp.dart';
-import 'package:parking_app_admin/views/home/home.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
- final phoneController = TextEditingController();
+
+  final phoneController = TextEditingController();
   final authController = Get.put(AuthController());
 
   @override
@@ -20,249 +19,120 @@ class Login extends StatelessWidget {
     return Scaffold(
       backgroundColor: kbgcolor,
       body: SafeArea(
-        bottom: false,
         child: Center(
           child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: size.width),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Logo Section
-                  Container(child: SvgPicture.asset("assets/images/logo1.svg")),
-                  SizedBox(height: 35),
+            child: Column(
+              children: [
+                // Logo
+                SvgPicture.asset("assets/images/logo1.svg"),
+                SizedBox(height: 35),
 
-                  // Login Title
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Login With Mobile",
-                          style: GoogleFonts.publicSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.grey.shade900,
+                // Title
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Login With Mobile",
+                      style: GoogleFonts.publicSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.grey.shade900,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 25),
+
+                // Phone Input
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade800),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 15),
+                      Text("+91", style: TextStyle(fontSize: 14)),
+                      Container(width: 1, height: 22, color: Colors.grey),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: phoneController,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Mobile Number",
                           ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 22),
+
+                // Terms & Privacy
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: RichText(
+                    text: TextSpan(
+                      text: "By continuing, I agree to the ",
+                      style: GoogleFonts.publicSans(fontSize: 12, color: Colors.grey.shade900),
+                      children: [
+                        TextSpan(
+                          text: "Terms of Service",
+                          style: TextStyle(color: ksecndrycolor),
+                          recognizer: TapGestureRecognizer()..onTap = () {},
+                        ),
+                        TextSpan(text: " & "),
+                        TextSpan(
+                          text: "Privacy Policy",
+                          style: TextStyle(color: ksecndrycolor),
+                          recognizer: TapGestureRecognizer()..onTap = () {},
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 25),
+                ),
+                SizedBox(height: 27),
 
-                  // Mobile Number Input Section
-                  Container(
+                // Continue Button
+                GestureDetector(
+                  onTap: () {
+                    String phoneNumber = "+91${phoneController.text.trim()}";
+                    if (phoneController.text.length < 10) {
+                      Get.snackbar("Error", "Enter a valid phone number");
+                    } else {
+                      authController.signInWithPhoneNumber(phoneNumber);
+                    }
+                  },
+                  child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
-                    width: size.width,
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade800),
+                      color: kprimerycolor,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(width: 15),
-                        SizedBox(
-                          width: 35,
-                          height: 22,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            cursorColor: Colors.grey.shade700,
-                            cursorHeight: 18,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "+91",
-                              hintStyle: GoogleFonts.publicSans(
-                                color: Colors.grey.shade600,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 1,
-                          height: 22,
-                          decoration:
-                              BoxDecoration(color: Colors.grey.shade500),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Stack(
-                            children: [
-                              TextField(
-                                controller: phoneController,
-                                keyboardType: TextInputType.phone,
-                                cursorColor: Colors.grey.shade700,
-                                cursorHeight: 18,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Mobile Number ",
-                                  hintStyle: GoogleFonts.publicSans(
-                                    color: Colors.grey.shade600,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                onChanged: (value) {
-                                  authController.isTyping.value = true;
-                                   phoneController.value.text.isEmpty
-                                      ? authController.isTyping.value = false
-                                      : true;
-                                },
-                              ),
-                              Obx(
-                                () => authController.isTyping.value
-                                    ? SizedBox()
-                                    : Positioned(
-                                        left: 105,
-                                        top: 13,
-                                        child: Text(
-                                          "*",
-                                          style: GoogleFonts.publicSans(
-                                            color: ksecndrycolor,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                      ],
-                    ),
+                    child: Center(child: Text("Continue")),
                   ),
-                  SizedBox(height: 22),
+                ),
+                SizedBox(height: 22),
 
-                  // Terms and Privacy
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              text: "By continuing, i agree to the",
-                              style: GoogleFonts.publicSans(
-                                color: Colors.grey.shade900,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              children: [
-                                TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Get.to(() => Home());
-                                    },
-                                  text: " Terms of Service",
-                                  style: GoogleFonts.publicSans(
-                                    color: ksecndrycolor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: " & ",
-                                  style: GoogleFonts.publicSans(
-                                    color: Colors.grey.shade900,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Get.to(() => Home());
-                                    },
-                                  text: "Privacy Policy",
-                                  style: GoogleFonts.publicSans(
-                                    color: ksecndrycolor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 27),
-
-                  // Continue Button
-                  GestureDetector(
-                   onTap: () {
-                      String phoneNumber = "+91${phoneController.text.trim()}";
-                      if (phoneNumber.length < 10) {
-                        Get.snackbar("Error", "Enter a valid phone number");
-                      } else {
-                        authController.signInWithPhoneNumber(phoneNumber);
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      width: size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: kprimerycolor,
+                // Help Section
+                Text.rich(
+                  TextSpan(
+                    text: "Having trouble? ",
+                    children: [
+                      TextSpan(
+                        text: "Need help",
+                        style: TextStyle(color: ksecndrycolor),
+                        recognizer: TapGestureRecognizer()..onTap = () {},
                       ),
-                      child: Center(
-                        child: Text(
-                          "Continue",
-                          style: GoogleFonts.publicSans(
-                            color: Colors.grey.shade900,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
+                    ],
                   ),
-                  SizedBox(height: 22),
-
-                  // Help Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: "Having trouble? ",
-                            style: GoogleFonts.publicSans(
-                              color: Colors.grey.shade900,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            children: [
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.to(() => Home());
-                                  },
-                                text: "Need help",
-                                style: GoogleFonts.publicSans(
-                                  color: ksecndrycolor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

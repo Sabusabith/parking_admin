@@ -12,7 +12,20 @@
           "package_name": "com.example.parking_app_admin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "624678203760-u8h57cs4t44u1dd54qso5sem778fo3ea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parking_app_admin",
+            "certificate_hash": "ce1d8aace3de9113c120d2637d297c43afa93320"
+          }
+        },
+        {
+          "client_id": "624678203760-a7eku6uk1a4kke59ipo2i8hkqms8kpkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDRRzp-TjsSj45NzpL2c-bHufTUsqxlyq8"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624678203760-a7eku6uk1a4kke59ipo2i8hkqms8kpkb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "624678203760-ka6j0e4kqdeeoid6duc8gia6e27nfr5r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.parkingAppAdmin"
+              }
+            }
+          ]
         }
       }
     }

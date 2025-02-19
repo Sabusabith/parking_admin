@@ -6,11 +6,9 @@ import 'package:parking_app_admin/views/splash/splash.dart';
 
 import 'core/data/firebase/firebase_options.dart';
 
-void main(List<String> args)async{
+void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-     options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
   // runApp(DevicePreview(
   //   enabled: true, // Set this to false for production

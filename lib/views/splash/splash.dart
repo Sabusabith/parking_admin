@@ -24,8 +24,8 @@ class Splash extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: SvgPicture.asset(
-                  "assets/images/logo.svg",height: 140,
+                child: Image.asset(
+                  "assets/images/splash.png",height: 140,
                   fit: BoxFit.contain
                 ),
               ),

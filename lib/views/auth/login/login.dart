@@ -24,7 +24,7 @@ class Login extends StatelessWidget {
             child: Column(
               children: [
                 // Logo
-                SvgPicture.asset("assets/images/logo1.svg"),
+                Image.asset("assets/images/logo1.png",height: 55,),
                 SizedBox(height: 35),
 
                 // Title
@@ -55,6 +55,7 @@ class Login extends StatelessWidget {
                     children: [
                       SizedBox(width: 15),
                       Text("+91", style: TextStyle(fontSize: 14)),
+                       SizedBox(width: 5),
                       Container(width: 1, height: 22, color: Colors.grey),
                       SizedBox(width: 10),
                       Expanded(

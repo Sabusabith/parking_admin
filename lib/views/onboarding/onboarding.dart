@@ -34,9 +34,14 @@ class OnboardingPageView extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 15),
           child: SizedBox(
-              height: 54, child: SvgPicture.asset("assets/images/logo1.svg")),
+              height: 30,
+              child: Image.asset(
+                "assets/images/logo1.png",
+                height: 30,
+                fit: BoxFit.contain,
+              )),
         ),
-        leadingWidth: 100,
+        leadingWidth: 60,
       ),
       backgroundColor: kbgcolor,
       body: Stack(

@@ -27,14 +27,18 @@ class OTPScreen extends StatelessWidget {
         height: size.height,
         child: Center(
           child: SingleChildScrollView(
-            child: ConstrainedBox(              constraints: BoxConstraints(maxWidth: size.width),
-
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: size.width),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Logo Section
-                  Container(child: SvgPicture.asset("assets/images/logo1.svg")),
+                  Container(
+                      child: Image.asset(
+                    "assets/images/logo1.png",
+                    height: 55,
+                  )),
                   SizedBox(height: 45),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -81,17 +85,18 @@ class OTPScreen extends StatelessWidget {
                             builder: (context) {
                               return AlertDialog(
                                 title: Text("Verification Code"),
-                                content: Text('Code entered is $verificationCode'),
+                                content:
+                                    Text('Code entered is $verificationCode'),
                                 actions: [
-                                  GestureDetector(onTap: () {
-                                    Get.to(()=>Home());
-                                    
-              
-                                  },
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => Home());
+                                    },
                                     child: Container(
                                       height: 45,
                                       width: size.width,
-                                      margin: EdgeInsets.symmetric(horizontal: 20),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 20),
                                       decoration: BoxDecoration(
                                         color: kprimerycolor,
                                         borderRadius: BorderRadius.circular(12),
@@ -150,9 +155,10 @@ class OTPScreen extends StatelessWidget {
                                             ? "00:00"
                                             : "00:${otpController.countdown.value.toString().padLeft(2, '0')}",
                                         style: GoogleFonts.publicSans(
-                                          color: otpController.countdown.value == 0
-                                              ? Colors.red
-                                              : Colors.grey.shade600,
+                                          color:
+                                              otpController.countdown.value == 0
+                                                  ? Colors.red
+                                                  : Colors.grey.shade600,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
                                         ),

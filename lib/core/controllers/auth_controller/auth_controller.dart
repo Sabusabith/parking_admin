@@ -1,27 +1,35 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
+import 'package:parking_app_admin/core/api_provider/api_provider.dart';
+import 'package:parking_app_admin/core/apiconfigs/apiconfigs.dart';
+import 'package:parking_app_admin/core/models/auth/generate_otp_model.dart';
 import 'package:parking_app_admin/views/auth/otp/otp.dart';
 import '../../../views/home/home.dart';
-import '../../data/firebase/firebase_auth/firebase_auth.dart';
+import 'package:dio/dio.dart';
 
 class AuthController extends GetxController {
   var isTyping = false.obs;
   var verificationId = ''.obs;
-  final AuthService _authService = AuthService();
 
-  void signInWithPhoneNumber(String phoneNumber) {
-    _authService.signInWithPhone(phoneNumber, (String verificationId) {
-      this.verificationId.value = verificationId;
-      Get.to(() => OTPScreen());
-    });
-  }
+  var url = AppUrls.BASE_URL + AppUrls.Generate_OTP;
+  GenerateOtpModel? model;
+  loginFn(Map data) async {
+    try {
+      Response response = await ApiProvider().post(url, data);
 
-  void verifyOTP(String otp) async {
-    UserCredential? userCredential = await _authService.verifyOTP(verificationId.value, otp);
-    if (userCredential != null) {
-      Get.offAll(() => Home());
-    } else {
-      Get.snackbar("Error", "Invalid OTP");
+      if (response.statusCode == 200) {
+        model = GenerateOtpModel.fromJson(response.data);
+        var finaldata = model?.data.otp;
+        print("Otp :  ${finaldata}");
+        Get.to(OTPScreen());
+      } else {
+       print(model?.message.toString());
+      }
+    } on DioException catch (error) {
+      print(error.response?.data["message"]);
+
+      throw ApiProvider().handleError(error);
     }
   }
 }

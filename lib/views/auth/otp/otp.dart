@@ -76,6 +76,7 @@ class OTPScreen extends StatelessWidget {
                       cursorColor: Colors.grey.shade700,
                       borderWidth: 1,
                       keyboardType: TextInputType.number,
+                      clearText: true,
                       showFieldAsBox: true,
                       margin: EdgeInsets.symmetric(horizontal: 8),
                       onCodeChanged: (String code) {},
@@ -85,8 +86,19 @@ class OTPScreen extends StatelessWidget {
                             builder: (context) {
                               return AlertDialog(
                                 title: Text("Verification Code"),
-                                content:
-                                    Text('Code entered is $verificationCode'),
+                                content: RichText(
+                                  text: TextSpan(
+                                      text: "Code entered is",
+                                      style: GoogleFonts.publicSans(
+                                          color: Colors.grey.shade800,fontSize: 12),
+                                      children: [
+                                        TextSpan(
+                                            text: "  $verificationCode",
+                                            style: GoogleFonts.publicSans(fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color: kgreencolor))
+                                      ]),
+                                ),
                                 actions: [
                                   GestureDetector(
                                     onTap: () {
@@ -95,15 +107,13 @@ class OTPScreen extends StatelessWidget {
                                     child: Container(
                                       height: 45,
                                       width: size.width,
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 20),
                                       decoration: BoxDecoration(
                                         color: kprimerycolor,
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "Next",
+                                          "Confirm",
                                           style: GoogleFonts.publicSans(
                                               color: Colors.grey.shade900,
                                               fontSize: 12,

@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:parking_app_admin/core/controllers/auth_controller/auth_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
+import 'package:parking_app_admin/views/auth/otp/otp.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
 
   final phoneController = TextEditingController();
   final authController = Get.put(AuthController());
-
+  var isvalid = false.obs;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -23,11 +25,8 @@ class Login extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Logo
-                Image.asset("assets/images/logo1.png",height: 55,),
+                Image.asset("assets/images/logo1.png", height: 55),
                 SizedBox(height: 35),
-
-                // Title
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Align(
@@ -43,43 +42,53 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 25),
-
-                // Phone Input
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade800),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 15),
-                      Text("+91", style: TextStyle(fontSize: 14)),
-                       SizedBox(width: 5),
-                      Container(width: 1, height: 22, color: Colors.grey),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: TextField(
-                          controller: phoneController,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Mobile Number",
+                Obx(
+                  () => Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: isvalid.value
+                              ? ksecndrycolor
+                              : Colors.grey.shade800),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 15),
+                        Text("+91", style: TextStyle(fontSize: 14)),
+                        SizedBox(width: 5),
+                        Container(width: 1, height: 22, color: Colors.grey),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: TextField(
+                            onChanged: (value) {
+                              value.length == 10
+                                  ? isvalid(false)
+                                  : isvalid(true);
+                            },
+                            controller: phoneController,
+                            keyboardType: TextInputType.phone,
+                            maxLength: 10,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Mobile Number",
+                              counterText:
+                                  "", // Hides the counter below TextField
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 22),
-
-                // Terms & Privacy
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: RichText(
                     text: TextSpan(
                       text: "By continuing, I agree to the ",
-                      style: GoogleFonts.publicSans(fontSize: 12, color: Colors.grey.shade900),
+                      style: GoogleFonts.publicSans(
+                          fontSize: 12, color: Colors.grey.shade900),
                       children: [
                         TextSpan(
                           text: "Terms of Service",
@@ -97,15 +106,34 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 27),
-
-                // Continue Button
                 GestureDetector(
                   onTap: () {
                     String phoneNumber = "+91${phoneController.text.trim()}";
                     if (phoneController.text.length < 10) {
-                      Get.snackbar("Error", "Enter a valid phone number");
+                      isvalid(true);
+                      // Fluttertoast.showToast(
+                      //   msg: "Enter a valid 10-digit phone number",
+                      //   toastLength: Toast.LENGTH_SHORT,
+                      //   gravity: ToastGravity.BOTTOM,
+                      // );
+
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: ksecndrycolor,
+                          content: Text(
+                            "Enter a valid 10-digit phone number",
+                            style: GoogleFonts.publicSans(
+                                color: Colors.white, fontSize: 15),
+                          )));
+
+                      // Get.snackbar("", "",
+                      //     borderWidth: size.width,
+                      //     padding: EdgeInsets.only(top: 10, bottom: 10),
+                      //     backgroundColor: Colors.red,
+                      //     colorText: Colors.white,
+                      //     snackPosition: SnackPosition.BOTTOM);
                     } else {
-                      authController.signInWithPhoneNumber(phoneNumber);
+                      isvalid(false);
+                      _loginAuthentication();
                     }
                   },
                   child: Container(
@@ -119,8 +147,6 @@ class Login extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 22),
-
-                // Help Section
                 Text.rich(
                   TextSpan(
                     text: "Having trouble? ",
@@ -139,5 +165,13 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _loginAuthentication() {
+    var phonenumber = phoneController.text.toString();
+
+    Map data = {"mobileNumber": phonenumber};
+
+    authController.loginFn(data);
   }
 }

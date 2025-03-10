@@ -11,15 +11,15 @@ import '../../../core/controllers/auth_controller/otp_controller.dart';
 import '../../home/home.dart';
 
 class OTPScreen extends StatelessWidget {
-  const OTPScreen({super.key});
-
+  OTPScreen({super.key, this.otp});
+  String? otp;
   @override
   Widget build(BuildContext context) {
     // Using the OTPController with GetX
-    final otpController = Get.put(OTPController());
+
+    final otpController = Get.put(OTPController(otp.toString()));
 
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: kbgcolor,
       body: SizedBox(
@@ -90,11 +90,13 @@ class OTPScreen extends StatelessWidget {
                                   text: TextSpan(
                                       text: "Code entered is",
                                       style: GoogleFonts.publicSans(
-                                          color: Colors.grey.shade800,fontSize: 12),
+                                          color: Colors.grey.shade800,
+                                          fontSize: 12),
                                       children: [
                                         TextSpan(
                                             text: "  $verificationCode",
-                                            style: GoogleFonts.publicSans(fontSize: 12,
+                                            style: GoogleFonts.publicSans(
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.w600,
                                                 color: kgreencolor))
                                       ]),

@@ -22,7 +22,7 @@ class AuthController extends GetxController {
         model = GenerateOtpModel.fromJson(response.data);
         var finaldata = model?.data.otp;
         print("Otp :  ${finaldata}");
-        Get.to(OTPScreen());
+        Get.to(OTPScreen(otp: finaldata,));
       } else {
        print(model?.message.toString());
       }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:parking_app_admin/core/controllers/profile_controller/get_profile_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/bookings/bookings.dart';
 import 'package:parking_app_admin/views/home/dashboard/dashboard.dart';
@@ -20,7 +21,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
-
+ final getprofileController = Get.put(GetProfileController());
     Size size = MediaQuery.of(context).size;
 print("screen width = ${size.width}");
     return Scaffold(

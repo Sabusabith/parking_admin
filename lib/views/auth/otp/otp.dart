@@ -5,19 +5,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart'; // Import GetX
 import 'package:parking_app_admin/utils/common/appcolors.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../core/controllers/auth_controller/otp_controller.dart';
 import '../../home/home.dart';
 
 class OTPScreen extends StatelessWidget {
-  OTPScreen({super.key, this.otp});
+  OTPScreen({super.key, this.mobilenum, this.otp});
+
+  String? mobilenum;
   String? otp;
   @override
   Widget build(BuildContext context) {
     // Using the OTPController with GetX
 
-    final otpController = Get.put(OTPController(otp.toString()));
+    final otpController = Get.put(OTPController(mobilenum.toString(), otp));
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -57,77 +59,42 @@ class OTPScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 25),
-                  Container(
-                    margin: EdgeInsets.only(left: 12),
-                    width: size.width,
-                    child: OtpTextField(
-                      showCursor: false,
-                      alignment: Alignment.centerLeft,
-                      fieldHeight: 40,
-                      fieldWidth: 40,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      borderRadius: BorderRadius.circular(10),
-                      contentPadding: EdgeInsets.symmetric(vertical: 5),
-                      numberOfFields: 4,
-                      borderColor: Colors.grey.shade700,
-                      enabledBorderColor: Colors.grey.shade700,
-                      focusedBorderColor: Colors.grey.shade900,
-                      cursorColor: Colors.grey.shade700,
-                      borderWidth: 1,
-                      keyboardType: TextInputType.number,
-                      clearText: true,
-                      showFieldAsBox: true,
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      onCodeChanged: (String code) {},
-                      onSubmit: (String verificationCode) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text("Verification Code"),
-                                content: RichText(
-                                  text: TextSpan(
-                                      text: "Code entered is",
-                                      style: GoogleFonts.publicSans(
-                                          color: Colors.grey.shade800,
-                                          fontSize: 12),
-                                      children: [
-                                        TextSpan(
-                                            text: "  $verificationCode",
-                                            style: GoogleFonts.publicSans(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: kgreencolor))
-                                      ]),
-                                ),
-                                actions: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => Home());
-                                    },
-                                    child: Container(
-                                      height: 45,
-                                      width: size.width,
-                                      decoration: BoxDecoration(
-                                        color: kprimerycolor,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Confirm",
-                                          style: GoogleFonts.publicSans(
-                                              color: Colors.grey.shade900,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              );
-                            });
-                      },
+                  Padding(
+                    padding: const EdgeInsets.only(right: 120, left: 10),
+                    child: Container(
+                      height: 45,
+                      margin: EdgeInsets.only(left: 12),
+                      width: size.width,
+                      child: PinFieldAutoFill(
+                        keyboardType: TextInputType.numberWithOptions(),
+                        decoration: BoxLooseDecoration(
+                          textStyle: GoogleFonts.publicSans(
+                              color: Colors.grey.shade800,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                          strokeColorBuilder: FixedColorBuilder(
+                              Colors.grey.shade700), // Border color
+                          bgColorBuilder: FixedColorBuilder(
+                              Colors.white), // Background color
+                          gapSpace: 21, // Space between boxes
+                          radius: Radius.circular(
+                              10), // Set to zero for perfect rectangle
+                          strokeWidth: 1.5, // Border thickness
+                        ),
+                        codeLength: 4,
+                        onCodeChanged: (code) {
+                          print("changed code $code");
+                          if (code.toString().isNotEmpty &&
+                              code.toString().length == 4) {
+                            otpController.verifyOtp(code.toString() ?? "4444");
+                          }
+                        },
+                        onCodeSubmitted: (code) {
+                          print("submited code $code");
+
+                          otpController.verifyOtp(code);
+                        },
+                      ),
                     ),
                   ),
                   SizedBox(height: 25),
@@ -165,7 +132,7 @@ class OTPScreen extends StatelessWidget {
                                       TextSpan(
                                         text: otpController.countdown.value == 0
                                             ? "00:00"
-                                            : "00:${otpController.countdown.value.toString().padLeft(2, '0')}",
+                                            : "${(otpController.countdown.value ~/ 60).toString().padLeft(2, '0')}:${(otpController.countdown.value % 60).toString().padLeft(2, '0')}",
                                         style: GoogleFonts.publicSans(
                                           color:
                                               otpController.countdown.value == 0

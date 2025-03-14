@@ -7,6 +7,8 @@ class AppUrls{
 //end points.........................
     static String Generate_OTP = "auth/generate-otp";
     static String Verify_OTP = "auth/verify-otp";
-    static String Refresh_OTP = "auth/refresh";
+    static String REFRESH_Token = "auth/refresh";
+      static String GET_PROFILE = "profile";
+
     
 }

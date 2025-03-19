@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/core/controllers/profile_controller/get_profile_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/bank_details/bankdetails.dart';
+import 'package:parking_app_admin/views/home/profile/edit_profile.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
@@ -65,19 +66,27 @@ class Profile extends StatelessWidget {
                     SizedBox(
                       height: 14,
                     ),
-                    Container(
-                      width: 78,
-                      height: 26,
-                      decoration: BoxDecoration(
-                          color: Color(0xffFFD900),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          "Edit Profile",
-                          style: GoogleFonts.publicSans(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey.shade900,
-                              fontSize: 10),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => EditProfile(
+                              firstName: firstname.toString(),
+                              lastName: lastname.toString(),
+                            ));
+                      },
+                      child: Container(
+                        width: 78,
+                        height: 26,
+                        decoration: BoxDecoration(
+                            color: Color(0xffFFD900),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: Text(
+                            "Edit Profile",
+                            style: GoogleFonts.publicSans(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade900,
+                                fontSize: 10),
+                          ),
                         ),
                       ),
                     ),

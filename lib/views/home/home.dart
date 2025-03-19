@@ -25,10 +25,12 @@ class Home extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 print("screen width = ${size.width}");
     return Scaffold(
+      drawer: Drawer(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(25),
         child: Obx(() {
           return AppBar(
+
             elevation: 0,
             toolbarHeight: 25,
             surfaceTintColor: Colors.transparent,
@@ -40,13 +42,17 @@ print("screen width = ${size.width}");
             leadingWidth: 45,
             leading: Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: SvgPicture.asset(
-                    "assets/icons/menu.svg",
-                    fit: BoxFit.contain,
-                  )),
+              child: GestureDetector( onTap: (){
+                Scaffold.of(context).openDrawer();
+              },
+                child:Builder(builder: (context) =>  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: SvgPicture.asset(
+                      "assets/icons/menu.svg",
+                      fit: BoxFit.contain,
+                    )),
+                ))
             ),
             actions: [
               GestureDetector(

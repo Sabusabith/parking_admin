@@ -22,12 +22,15 @@ class OTPController extends GetxController with CodeAutoFill {
   late Timer _timer;
   String? otpCode;
   VerifyOtpModel? otpModel;
+    String? appSignature;
 
   @override
   void onInit() {
     super.onInit();
     listenForCode();
+    listenOtp();
     startTimer();
+       getAppSignature();
   }
 
   @override
@@ -38,6 +41,14 @@ class OTPController extends GetxController with CodeAutoFill {
       verifyOtp(otpCode!);
     }
   }
+
+    void listenOtp() async {
+    await SmsAutoFill().unregisterListener();
+    listenForCode();
+    await SmsAutoFill().listenForCode;
+    print("OTP listen Called");
+  }
+
 
   void startTimer() {
     canResend.value = false;
@@ -101,6 +112,20 @@ class OTPController extends GetxController with CodeAutoFill {
           backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
+
+void getAppSignature() async {
+  try {
+    String? signature = await SmsAutoFill().getAppSignature;
+    if (signature.isNotEmpty) {
+      print("App Signature: $signature");
+    } else {
+      print("App Signature is empty!");
+    }
+  } catch (e) {
+    print("Error fetching App Signature: $e");
+  }
+}
+
 
   @override
   void onClose() {

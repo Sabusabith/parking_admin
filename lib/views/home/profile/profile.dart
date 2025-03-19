@@ -1,14 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/core/controllers/profile_controller/get_profile_controller.dart';
+import 'package:parking_app_admin/core/controllers/profile_controller/update_profile_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/bank_details/bankdetails.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
   GetProfileController controller = Get.put(GetProfileController());
+  UpdateProfileController _controller = Get.put(UpdateProfileController());
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -65,19 +70,26 @@ class Profile extends StatelessWidget {
                     SizedBox(
                       height: 14,
                     ),
-                    Container(
-                      width: 78,
-                      height: 26,
-                      decoration: BoxDecoration(
-                          color: Color(0xffFFD900),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(
-                          "Edit Profile",
-                          style: GoogleFonts.publicSans(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.grey.shade900,
-                              fontSize: 10),
+                    InkWell(
+                      onTap: () {
+                        /// navigate to edit profile screen
+                        _controller.editProfile(
+                            firstName: "rahul", lastName: "astralogic");
+                      },
+                      child: Container(
+                        width: 78,
+                        height: 26,
+                        decoration: BoxDecoration(
+                            color: Color(0xffFFD900),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: Text(
+                            "Edit Profile",
+                            style: GoogleFonts.publicSans(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey.shade900,
+                                fontSize: 10),
+                          ),
                         ),
                       ),
                     ),

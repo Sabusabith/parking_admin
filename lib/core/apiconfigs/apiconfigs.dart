@@ -9,6 +9,6 @@ class AppUrls{
     static String Verify_OTP = "auth/verify-otp";
     static String REFRESH_Token = "auth/refresh";
       static String GET_PROFILE = "profile";
-
+static String UPDATE_PROFILE ="profile";
     
 }

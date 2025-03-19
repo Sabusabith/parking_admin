@@ -75,7 +75,6 @@ class ApiProvider {
     await clearSavedObject('token');
     await clearSavedObject('refreshToken');
 
-
     // Navigate to login screen (replace with your login page)
     Get.offAll(Login());
   }

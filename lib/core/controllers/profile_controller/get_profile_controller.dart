@@ -7,14 +7,23 @@ import '../../apiconfigs/apiconfigs.dart';
 
 class GetProfileController extends GetxController {
   @override
+  void onReady() {
+    // TODO: implement onReady
+    super.onReady();
+    fetchProfile();
+  }
+  @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     fetchProfile();
   }
+
   var url = AppUrls.BASE_URL + AppUrls.GET_PROFILE;
   GetProfileModel? profileModel;
   fetchProfile() async {
+          print("profile data: called");
+
     Response response = await ApiProvider().get(
       url,
     );

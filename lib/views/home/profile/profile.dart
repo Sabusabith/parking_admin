@@ -3,18 +3,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parking_app_admin/core/controllers/profile_controller/get_profile_controller.dart';
+import 'package:parking_app_admin/core/controllers/refreshToken_controller/refresh_token_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/bank_details/bankdetails.dart';
 import 'package:parking_app_admin/views/home/profile/edit_profile.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
-  GetProfileController controller = Get.put(GetProfileController());
+
   @override
   Widget build(BuildContext context) {
+      GetProfileController controller = Get.put(GetProfileController());
     Size size = MediaQuery.of(context).size;
     var firstname = controller.profileModel?.data.user.firstName.toString();
     var lastname = controller.profileModel?.data.user.lastName.toString();
+
     return Scaffold(
       backgroundColor: kbgcolor,
       body: SizedBox(
@@ -47,20 +50,24 @@ class Profile extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      (firstname != null &&
-                                  firstname != "null" &&
-                                  firstname.isNotEmpty) ||
-                              (lastname != null &&
-                                  lastname != "null" &&
-                                  lastname.isNotEmpty)
-                          ? "${firstname != "null" ? firstname : ""} ${lastname != "null" ? lastname : ""}"
-                              .trim()
-                          : "Harikrishna",
-                      style: GoogleFonts.caveat(
-                        color: Colors.grey.shade900,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 22,
+                    GestureDetector(onTap: (){
+                      controller.fetchProfile();
+                    },
+                      child: Text(
+                        (firstname != null &&
+                                    firstname != "null" &&
+                                    firstname.isNotEmpty) ||
+                                (lastname != null &&
+                                    lastname != "null" &&
+                                    lastname.isNotEmpty)
+                            ? "${firstname != "null" ? firstname : ""} ${lastname != "null" ? lastname : ""}"
+                                .trim()
+                            : "Harikrishna",
+                        style: GoogleFonts.caveat(
+                          color: Colors.grey.shade900,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 22,
+                        ),
                       ),
                     ),
                     SizedBox(

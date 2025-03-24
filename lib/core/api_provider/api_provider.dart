@@ -28,6 +28,7 @@ class ApiProvider {
 
           // Try refreshing the token
           bool refreshed = await refreshToken();
+
           if (refreshed) {
             // Retry the failed request with the new token
             return handler.resolve(await _retry(error.requestOptions));
@@ -54,7 +55,10 @@ class ApiProvider {
 
       if (response.statusCode == 200) {
         refreshTokebnModel = refreshTokebnModelFromJson(response.data);
+        print(" refresh token status code ${response.statusCode}");
         String? newToken = refreshTokebnModel?.data.token.toString();
+        //
+        //print(newToken);
         if (newToken == null) {
           print(" New Token is null");
         }

@@ -89,12 +89,13 @@ class ApiProvider {
           "🔄 Refreshing token via: ${AppUrls.BASE_URL + AppUrls.REFRESH_Token}");
       String cookieHeader =
           cookies.entries.map((e) => "${e.key}=${e.value}").join("; ");
-    
-          var cookieValue = cookieHeader.split("=")[1];
+
+      var cookieValue = cookieHeader.split("=")[1];
 
       Response response = await dio.post(
           AppUrls.BASE_URL + AppUrls.REFRESH_Token,
-          options: Options(headers: {"Cookie": "refreshToken=${cookieValue.toString()}"}));
+          options: Options(
+              headers: {"Cookie": "refreshToken=${cookieValue.toString()}"}));
 
       if (response.statusCode == 200 && response.data != null) {
         print(response.statusCode);
@@ -117,6 +118,8 @@ class ApiProvider {
   Future<void> logoutUser() async {
     print("🚪 Logging out user...");
     cookies = {}; // ✅ Reset through setter
+    await clearSavedObject('token');
+
     Get.offAll(Login());
   }
 

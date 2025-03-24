@@ -1,64 +1,105 @@
 import 'package:dio/dio.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/route_manager.dart';
 import 'package:parking_app_admin/core/apiconfigs/apiconfigs.dart';
-import 'package:parking_app_admin/core/models/auth/refresh_token_model.dart';
 import 'package:parking_app_admin/views/auth/login/login.dart';
+
 import '../data/shared_pref/shared_pref.dart';
 
 class ApiProvider {
   Dio dio = Dio();
-  RefreshTokebnModel? refreshTokebnModel;
-  ApiProvider() {
-    dio = Dio();
 
-    // Add interceptor to handle 401 Unauthorized errors globally
+  // ✅ Global cookie storage with a getter and setter
+  static Map<String, String> _cookies = {}; // Private storage
+
+  static Map<String, String> get cookies => _cookies; // Getter
+
+  static set cookies(Map<String, String> value) {
+    print("🚨 COOKIES RESET DETECTED! New value: $value");
+    _cookies = value; // Setter with debug log
+  }
+
+  ApiProvider() {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        // Fetch latest token before making request
+        print("🔍 Available Cookies Before Request: $cookies");
+        // Attach Auth Token
         String? token = await getSavedObject('token');
         if (token != null) {
           print("latest token: $token");
           options.headers["Authorization"] = "Bearer $token";
         }
+
         handler.next(options);
       },
-      onError: (DioException error, ErrorInterceptorHandler handler) async {
+      onResponse: (response, handler) {
+        _saveCookies(response);
+        handler.next(response);
+      },
+      onError: (DioException error, handler) async {
+        print(
+            "❌ Dio Error: ${error.response?.statusCode}, ${error.response?.data}");
+
         if (error.response != null && error.response!.statusCode == 401) {
           print("🔄 Token expired, trying to refresh...");
 
-          // Try refreshing the token
           bool refreshed = await refreshToken();
 
           if (refreshed) {
-            // Retry the failed request with the new token
+            print("✅ Retrying request with new token...");
             return handler.resolve(await _retry(error.requestOptions));
           } else {
-            // If refresh token is also expired, logout the user
+            print("🚪 Logging out user due to token refresh failure...");
             await logoutUser();
           }
         }
-        handler.next(error); // Continue processing the error
+
+        handler.next(error);
       },
     ));
   }
 
-  /// Refresh Token Function
+  /// ✅ Save cookies from response headers
+  void _saveCookies(Response response) {
+    if (response.headers.map.containsKey('set-cookie')) {
+      List<String>? setCookies = response.headers.map['set-cookie'];
+      if (setCookies != null) {
+        for (var cookie in setCookies) {
+          var parts = cookie.split(';')[0].split('=');
+          if (parts.length == 2) {
+            String key = parts[0].trim();
+            String value = parts[1].trim();
+
+            print("🔄 Updating Cookie: $key = $value");
+
+            // ✅ Update cookies through the setter
+            var newCookies = Map<String, String>.from(cookies);
+            newCookies[key] = value;
+            cookies = newCookies;
+          }
+        }
+      }
+      print("🍪 Stored Cookies After Update: $cookies");
+    }
+  }
+
+  /// 🔄 Refresh Token
   Future<bool> refreshToken() async {
     try {
-      // String? refreshToken = await getSavedObject('refreshToken');
-      // if (refreshToken == null) return false; // No refresh token, force logout
+      print(
+          "🔄 Refreshing token via: ${AppUrls.BASE_URL + AppUrls.REFRESH_Token}");
+      String cookieHeader =
+          cookies.entries.map((e) => "${e.key}=${e.value}").join("; ");
+    
+          var cookieValue = cookieHeader.split("=")[1];
 
       Response response = await dio.post(
-        AppUrls.BASE_URL + AppUrls.REFRESH_Token,
-        // data: {'refresh_token': refreshToken},
-      );
+          AppUrls.BASE_URL + AppUrls.REFRESH_Token,
+          options: Options(headers: {"Cookie": "refreshToken=${cookieValue.toString()}"}));
 
-      if (response.statusCode == 200) {
-        refreshTokebnModel = refreshTokebnModelFromJson(response.data);
-        print(" refresh token status code ${response.statusCode}");
-        String? newToken = refreshTokebnModel?.data.token.toString();
-        //
-        //print(newToken);
+      if (response.statusCode == 200 && response.data != null) {
+        print(response.statusCode);
+        String? newToken = response.data['data']['token'];
         if (newToken == null) {
           print(" New Token is null");
         }
@@ -67,33 +108,29 @@ class ApiProvider {
         return true;
       }
     } catch (e) {
-      print("❌ Token refresh failed: $e");
+      print("❌ Token refresh error: $e");
     }
+
     return false;
   }
 
-  /// Logout User and Clear Data
+  /// 🚪 Logout User and Clear Data
   Future<void> logoutUser() async {
     print("🚪 Logging out user...");
-
-    await clearSavedObject('token');
-    await clearSavedObject('refreshToken');
-
-    // Navigate to login screen (replace with your login page)
+    cookies = {}; // ✅ Reset through setter
     Get.offAll(Login());
   }
 
-  /// Retry request after token refresh
+  /// 🔄 Retry request after token refresh
   Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
-    String? newToken = await getSavedObject('token');
     final options = Options(
       method: requestOptions.method,
-      headers: {"Authorization": "Bearer $newToken"},
+      headers: {"Authorization": "Bearer ${cookies['token']}"},
     );
     return dio.request(requestOptions.path, options: options);
   }
 
-  /// GET Request
+  /// 🔵 GET Request
   Future<Response<dynamic>> get(String url,
       {Map<String, dynamic>? queryParams}) async {
     try {
@@ -104,7 +141,7 @@ class ApiProvider {
     }
   }
 
-  /// POST Request
+  /// 🟢 POST Request
   Future<Response<dynamic>> post(String url, dynamic data) async {
     try {
       print("POST request: $url");
@@ -114,7 +151,7 @@ class ApiProvider {
     }
   }
 
-  /// PUT Request
+  /// 🟡 PUT Request
   Future<Response<dynamic>> put(String url, dynamic data) async {
     try {
       print("PUT request: $url");
@@ -124,9 +161,20 @@ class ApiProvider {
     }
   }
 
-  /// Error Handling
+  /// 🔴 DELETE Request
+  Future<Response<dynamic>> delete(String url,
+      {Map<String, dynamic>? queryParams}) async {
+    try {
+      print("DELETE request: $url");
+      return await dio.delete(url, queryParameters: queryParams);
+    } on DioException catch (error) {
+      throw handleError(error);
+    }
+  }
+
+  /// ❌ Error Handling
   dynamic handleError(DioException error) {
-    String errorDescription = "";
+    String errorDescription = "Unexpected error occurred.";
 
     if (error.type == DioExceptionType.connectionTimeout ||
         error.type == DioExceptionType.receiveTimeout) {
@@ -135,13 +183,10 @@ class ApiProvider {
       if (error.response != null) {
         switch (error.response!.statusCode) {
           case 400:
-            errorDescription = "Bad request. Please check your input.";
+            errorDescription = "Bad request.";
             break;
           case 401:
-            errorDescription = "Unauthorized. Please log in again.";
-            break;
-          case 403:
-            errorDescription = "Forbidden. You don't have permission.";
+            errorDescription = "Unauthorized.";
             break;
           case 404:
             errorDescription = "Resource not found.";
@@ -153,10 +198,6 @@ class ApiProvider {
             errorDescription = "Something went wrong.";
         }
       }
-    } else if (error.type == DioExceptionType.cancel) {
-      errorDescription = "Request was cancelled.";
-    } else {
-      errorDescription = "Unexpected error occurred.";
     }
 
     print("Dio error: $errorDescription");

@@ -22,7 +22,7 @@ class OTPController extends GetxController with CodeAutoFill {
   late Timer _timer;
   String? otpCode;
   VerifyOtpModel? otpModel;
-    String? appSignature;
+  String? appSignature;
 
   @override
   void onInit() {
@@ -30,7 +30,7 @@ class OTPController extends GetxController with CodeAutoFill {
     listenForCode();
     listenOtp();
     startTimer();
-       getAppSignature();
+    getAppSignature();
   }
 
   @override
@@ -42,13 +42,12 @@ class OTPController extends GetxController with CodeAutoFill {
     }
   }
 
-    void listenOtp() async {
+  void listenOtp() async {
     await SmsAutoFill().unregisterListener();
     listenForCode();
     await SmsAutoFill().listenForCode;
     print("OTP listen Called");
   }
-
 
   void startTimer() {
     canResend.value = false;
@@ -92,7 +91,7 @@ class OTPController extends GetxController with CodeAutoFill {
           AppUrls.BASE_URL + AppUrls.Verify_OTP,
           {'mobileNumber': mobile, 'otp': code});
 
-      Navigator.pop(Get.context!);
+      //Navigator.pop(Get.context!); 
       if (response.data['status'] == "success") {
         isLoading(false);
         otpModel = VerifyOtpModel.fromJson(response.data);
@@ -113,19 +112,18 @@ class OTPController extends GetxController with CodeAutoFill {
     }
   }
 
-void getAppSignature() async {
-  try {
-    String? signature = await SmsAutoFill().getAppSignature;
-    if (signature.isNotEmpty) {
-      print("App Signature: $signature");
-    } else {
-      print("App Signature is empty!");
+  void getAppSignature() async {
+    try {
+      String? signature = await SmsAutoFill().getAppSignature;
+      if (signature.isNotEmpty) {
+        print("App Signature: $signature");
+      } else {
+        print("App Signature is empty!");
+      }
+    } catch (e) {
+      print("Error fetching App Signature: $e");
     }
-  } catch (e) {
-    print("Error fetching App Signature: $e");
   }
-}
-
 
   @override
   void onClose() {

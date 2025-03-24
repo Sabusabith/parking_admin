@@ -27,25 +27,26 @@ class UpdateProfileController extends GetxController {
       };
       print("body data   ${data["first_name"]} ${data["last_name"]}");
       var res = await ApiProvider().put(url, bodyData);
-
+      Navigator.pop(Get.context!); // to pop the alert message
       if (res.statusCode == 200) {
         updateProfile = UpdateprofileResModel.fromJson(res.data);
-        log("profile updated : ${updateProfile?.data?.user?.firstName} ${updateProfile?.data?.user?.lastName}");
+        log("!!!!profile updated : ${updateProfile?.data?.user?.firstName} ${updateProfile?.data?.user?.lastName}");
         isLoading(false);
-        log("profile updated in the edit page");
-
-        await controller.fetchProfile();
-        Get.back();
+       
+        // await controller.fetchProfile();
+        // Get.back();
 
         Get.snackbar("profile updated", "${updateProfile?.message}",
             backgroundColor: kgreencolor);
       } else {
+        Navigator.pop(Get.context!);
         log(res.statusCode.toString());
         log("Response Body: ${res.data}");
         Get.snackbar("Error", "${updateProfile?.message}",
             backgroundColor: ksecndrycolor);
       }
     } catch (e) {
+      Navigator.pop(Get.context!);
       log("error updating profile $e");
       Get.snackbar("Error", "Failed to update profile",
           backgroundColor: Colors.red);

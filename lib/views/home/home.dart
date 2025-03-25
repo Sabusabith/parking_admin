@@ -1,31 +1,33 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:parking_app_admin/core/controllers/profile_controller/get_profile_controller.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/bookings/bookings.dart';
 import 'package:parking_app_admin/views/home/dashboard/dashboard.dart';
 import 'package:parking_app_admin/views/home/myList/my_list.dart';
 import 'package:parking_app_admin/views/home/my_wallet/my_wallet.dart';
 import 'package:parking_app_admin/views/home/profile/profile.dart';
-import 'package:parking_app_admin/views/notification_screen/notification_screen.dart';
+
 import '../../core/controllers/homecontroller/home_controller.dart';
-import '../../core/controllers/refreshToken_controller/refresh_token_controller.dart';
-import '../../utils/common/appcolors.dart';
+import 'profile/pop_profile_detail/pop_addprofile_detail.dart';
 
 class Home extends StatelessWidget {
-  Home({super.key});
-  RefreshTokenController rcontroller = Get.put(RefreshTokenController());
-
+  Home({super.key, required this.isProfilenull});
+  bool isProfilenull;
+  TextEditingController fullNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
-    final getprofileController = Get.put(GetProfileController());
+    // final getprofileController = Get.put(GetProfileController());
     Size size = MediaQuery.of(context).size;
+
     print("screen width = ${size.width}");
+
+    // Show alert dialog if isProfilenull is true
+    if (isProfilenull) {
+      Future.microtask(() => _showProfileDialog(context));
+    }
     return Scaffold(
       drawer: Drawer(),
       appBar: PreferredSize(
@@ -58,10 +60,7 @@ class Home extends StatelessWidget {
                     ))),
             actions: [
               GestureDetector(
-                onTap: () {
-                  // Get.to(NotificationScreen());
-                 rcontroller.refreshToken();
-                },
+                onTap: () {},
                 child: SvgPicture.asset(
                   "assets/icons/bell.svg",
                   height: 30,
@@ -168,6 +167,138 @@ class Home extends StatelessWidget {
               ),
             ),
           )),
+    );
+  }
+
+// Function to show alert dialog
+  void _showProfileDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevents dialog from closing by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2,
+            decoration: BoxDecoration(
+                color: kprimerycolor, borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(children: [
+                  Container(
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: Image.asset(
+                      "assets/images/prf.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                      right: 1,
+                      bottom: 2,
+                      child: Image.asset(
+                        "assets/images/editcam.png",
+                        height: 25,
+                      ))
+                ]),
+                SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45),
+                  child: Container(
+                      width: 200,
+                      height: 45,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: TextFormField(
+                          cursorHeight: 20,
+                          style: GoogleFonts.caveat(
+                            color: Colors.grey.shade900,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22,
+                          ),
+                          textAlign: TextAlign.center,
+                          controller: fullNameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Enter your fullname",
+                            hintStyle:
+                                GoogleFonts.caveat(color: Colors.grey.shade400),
+                          ),
+                         
+                        ),
+                      )),
+                ),
+               
+                SizedBox(
+                  height: 25,
+                ),
+                GestureDetector(
+                  onTap: () {
+                
+    if (fullNameController.text.trim().isEmpty) {
+      Get.snackbar(
+        "Required",
+        "Full name is required",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } else {
+      // Proceed with your action
+      Navigator.pop(context);
+      print("Full name: ${fullNameController.text}");
+    }
+  
+                  },   
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Color(0xffFFD900),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Save  Changes', // Optional text inside the button
+                          style: GoogleFonts.publicSans(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                 RichText(
+                    text: TextSpan(
+                        text: "*",
+                        style: TextStyle(color: ksecndrycolor,fontSize: 18),
+                        children: [
+                      TextSpan(
+                          text: " Full name is required",
+                          style: GoogleFonts.publicSans(color: Colors.white,fontSize: 15))
+                    ])),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

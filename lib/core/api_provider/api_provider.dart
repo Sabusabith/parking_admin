@@ -44,6 +44,7 @@ class ApiProvider {
           print("🔄 Token expired, trying to refresh...");
 
           bool refreshed = await refreshToken();
+
           if (refreshed) {
             print("✅ Retrying request with new token...");
             return handler.resolve(await _retry(error.requestOptions));

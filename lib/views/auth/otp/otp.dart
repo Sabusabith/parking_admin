@@ -169,7 +169,7 @@ class OTPScreen extends StatelessWidget {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Get.to(() => Home());
+                                  
                                   },
                                 text: "Need help",
                                 style: GoogleFonts.publicSans(

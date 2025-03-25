@@ -1,115 +1,91 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:parking_app_admin/core/controllers/profile_controller/get_profile_controller.dart';
-import 'package:parking_app_admin/core/controllers/refreshToken_controller/refresh_token_controller.dart';
-import 'package:parking_app_admin/utils/common/appcolors.dart';
-import 'package:parking_app_admin/views/home/bank_details/bankdetails.dart';
-import 'package:parking_app_admin/views/home/profile/edit_profile.dart';
-import 'package:parking_app_admin/views/home/profile/shimmer_profile.dart';
 import 'package:shimmer/shimmer.dart';
 
-class Profile extends StatelessWidget {
-  Profile({super.key});
-  final GetProfileController controller = Get.put(GetProfileController());
+import '../../../utils/common/appcolors.dart';
+
+class ShimmerProfile extends StatelessWidget {
+  const ShimmerProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-   
-    return Scaffold(
-        backgroundColor: kbgcolor,
-        body: Obx(
-          () => controller.isLoading.value
-              ? SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: ShimmerProfile())
-              : SizedBox(
-                  width: size.width,
-                  height: size.height,
+    return Shimmer.fromColors(
+        baseColor: Colors.grey.shade200.withOpacity(.8),
+        highlightColor: Colors.grey.shade300,
+        child: Container(
+          width: size.width,
+          height: size.height,
+          child: Column(
+            children: [
+              Container(
+                width: size.width,
+                height: size.height / 3.4,
+                decoration: BoxDecoration(
+                    color: kprimerycolor,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(50))),
+                child: Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: size.width,
-                        height: size.height / 3.4,
-                        decoration: BoxDecoration(
-                            color: kprimerycolor,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(50),
-                                bottomRight: Radius.circular(50))),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 90,
-                                height: 90,
-                                decoration:
-                                    BoxDecoration(shape: BoxShape.circle),
-                                child: Image.asset(
-                                  "assets/images/prf.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Obx(
-                                () => Text(
-                                  "${controller.firstname.value.toString()} "
-                                  " ${controller.lastname.value.toString()}",
-                                  style: GoogleFonts.caveat(
-                                    color: Colors.grey.shade900,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 14,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => EditProfile(
-                                        firstName:
-                                            controller.firstname.toString(),
-                                        lastName:
-                                            controller.lastname.toString(),
-                                      ));
-                                },
-                                child: Container(
-                                  width: 78,
-                                  height: 26,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffFFD900),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                    child: Text(
-                                      "Edit Profile",
-                                      style: GoogleFonts.publicSans(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey.shade900,
-                                          fontSize: 10),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 25,
-                              )
-                            ],
+                        width: 90,
+                        height: 90,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Image.asset(
+                          "assets/images/prf.png",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "dsfgfsgfdg",
+                        style: GoogleFonts.caveat(
+                          color: Colors.grey.shade900,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 22,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 14,
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: 78,
+                          height: 26,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade900,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: Text(
+                              "Edit Profile",
+                              style: GoogleFonts.publicSans(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade900,
+                                  fontSize: 10),
+                            ),
                           ),
                         ),
                       ),
-                      Expanded(
+                      SizedBox(
+                        height: 25,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 15,),
+                Expanded(
                         child: Container(
                           width: size.width,
-                          color: kbgcolor,
+                        
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
@@ -123,7 +99,7 @@ class Profile extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Personal Details",
+                                        "",
                                         style: GoogleFonts.publicSans(
                                             color: Colors.grey.shade900,
                                             fontSize: 14,
@@ -165,7 +141,7 @@ class Profile extends StatelessWidget {
                                           width: 40,
                                           height: 18,
                                           decoration: BoxDecoration(
-                                              color: Color(0xffFEC107),
+                                              
                                               borderRadius:
                                                   BorderRadius.circular(33)),
                                           child: Center(
@@ -245,7 +221,7 @@ class Profile extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Bank Details",
+                                        "",
                                         style: GoogleFonts.publicSans(
                                             color: Colors.grey.shade900,
                                             fontSize: 14,
@@ -259,7 +235,7 @@ class Profile extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() => Bankdetails());
+                                  
                                   },
                                   child: Container(
                                     margin:
@@ -361,7 +337,7 @@ class Profile extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Wallet Details",
+                                        "",
                                         style: GoogleFonts.publicSans(
                                             color: Colors.grey.shade900,
                                             fontSize: 14,
@@ -387,10 +363,7 @@ class Profile extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        SvgPicture.asset(
-                                          "assets/icons/wallet3.svg",
-                                          height: 30,
-                                        ),
+                                       
                                         SizedBox(
                                           width: 10,
                                         ),
@@ -491,9 +464,8 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                       )
-                    ],
-                  ),
-                ),
+            ],
+          ),
         ));
   }
 }

@@ -8,6 +8,7 @@ import 'package:parking_app_admin/core/data/shared_pref/shared_pref.dart';
 import 'package:parking_app_admin/core/models/auth/verify_otp_model.dart';
 import 'package:parking_app_admin/utils/common/appcolors.dart';
 import 'package:parking_app_admin/views/home/home.dart';
+import 'package:parking_app_admin/views/home/profile/edit_profile.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../apiconfigs/apiconfigs.dart';
@@ -22,7 +23,7 @@ class OTPController extends GetxController with CodeAutoFill {
   late Timer _timer;
   String? otpCode;
   VerifyOtpModel? otpModel;
-    String? appSignature;
+  String? appSignature;
 
   @override
   void onInit() {
@@ -30,7 +31,7 @@ class OTPController extends GetxController with CodeAutoFill {
     listenForCode();
     listenOtp();
     startTimer();
-       getAppSignature();
+    getAppSignature();
   }
 
   @override
@@ -42,13 +43,12 @@ class OTPController extends GetxController with CodeAutoFill {
     }
   }
 
-    void listenOtp() async {
+  void listenOtp() async {
     await SmsAutoFill().unregisterListener();
     listenForCode();
     await SmsAutoFill().listenForCode;
     print("OTP listen Called");
   }
-
 
   void startTimer() {
     canResend.value = false;
@@ -92,15 +92,22 @@ class OTPController extends GetxController with CodeAutoFill {
           AppUrls.BASE_URL + AppUrls.Verify_OTP,
           {'mobileNumber': mobile, 'otp': code});
 
-      Navigator.pop(Get.context!);
+      //Navigator.pop(Get.context!);
       if (response.data['status'] == "success") {
         isLoading(false);
         otpModel = VerifyOtpModel.fromJson(response.data);
         // print("token ${otpModel?.data.token.toString()}");
+        print("firstname ${otpModel?.data.user.firstName}");
         saveObject("token", otpModel?.data.token.toString());
         Get.snackbar("Success", "OTP Verified",
             backgroundColor: Colors.green, colorText: Colors.white);
-        Get.to(() => Home());
+        var firstname = otpModel?.data.user.firstName;
+      if (firstname != null && firstname.toString().trim().isNotEmpty && firstname != "null") {
+          Get.offAll(()=> Home(isProfilenull: false,));
+        } else {
+                     Get.offAll(()=> Home(isProfilenull: true,));
+
+        }
       } else {
         Navigator.pop(Get.context!);
         Get.snackbar("Error", "Invalid OTP",
@@ -113,19 +120,18 @@ class OTPController extends GetxController with CodeAutoFill {
     }
   }
 
-void getAppSignature() async {
-  try {
-    String? signature = await SmsAutoFill().getAppSignature;
-    if (signature.isNotEmpty) {
-      print("App Signature: $signature");
-    } else {
-      print("App Signature is empty!");
+  void getAppSignature() async {
+    try {
+      String? signature = await SmsAutoFill().getAppSignature;
+      if (signature.isNotEmpty) {
+        print("App Signature: $signature");
+      } else {
+        print("App Signature is empty!");
+      }
+    } catch (e) {
+      print("Error fetching App Signature: $e");
     }
-  } catch (e) {
-    print("Error fetching App Signature: $e");
   }
-}
-
 
   @override
   void onClose() {
